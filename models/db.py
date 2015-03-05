@@ -44,6 +44,16 @@ response.generic_patterns = ['*'] if request.is_local else []
 from gluon.tools import Auth, Service, PluginManager
 
 auth = Auth(db)
+
+#Define additional fields for the user profile here
+
+auth.settings.extra_fields['auth_user']=[
+    Field('student', 'boolean'),
+    Field('tutor', 'boolean'),
+    Field('city'),
+    Field('US_state', label='State')]
+
+
 service = Service()
 plugins = PluginManager()
 
@@ -85,4 +95,3 @@ use_janrain(auth, filename='private/janrain.key')
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
-
