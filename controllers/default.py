@@ -17,9 +17,30 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Welcome to web2py!")
-    return dict(message=T('Hello World'))
+    posts = db().select(db.tutorP.ALL)
+    return dict(posts = posts)
+    
+    
 
+def add():   
+    title = request.args(0) or ''
+    
+    form = SQLFORM.factory(
+        Field('subject1', label = 'Subject 1', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!"),default ="-please choose a subject-", required = True),
+        Field('subject2', label = 'Subject 2 (optional)', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),
+        Field('subject3', label = 'Subject 3 (optional)', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),
+        Field('price', requires = IS_FLOAT_IN_RANGE(0, 100.00, error_message='The price should be in the range 0..100')),
+        Field('body', 'text', label = 'Service Description', requires = IS_NOT_EMPTY("Please enter a description of your services."))
+    )
+    
+    if form.process().accepted:
+        tutName = auth.user.first_name+'_'+auth.user.last_name[0]
+        newPage = db.tutorP.insert(name=auth.user.first_name+' '+auth.user.last_name[0]+'.')
+        db.tutorP.insert(name=tutName, date_created=datetime.utcnow(), body=form.vars.body, 
+                        subject1=form.vars.subject1, subject2=form.vars.subject2, subject3=form.vars.subject3, price=form.vars.price)
+        redirect(URL('default', 'index', args=auth.user.first_name+auth.user.last_name[0]))
+    
+    return dict(form = form)
 
 def user():
     """
