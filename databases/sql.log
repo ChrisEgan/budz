@@ -1,0 +1,264 @@
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-03-07T16:55:23.091876
+ALTER TABLE tutorP ADD bio TEXT;
+timestamp: 2015-03-07T16:55:23.094360
+ALTER TABLE tutorP ADD picture CHAR(512);
+timestamp: 2015-03-07T16:55:23.096854
+ALTER TABLE tutorP ADD college CHAR(512);
+timestamp: 2015-03-07T16:55:23.098303
+ALTER TABLE tutorP ADD professor CHAR(512);
+success!
+success!
+success!
+success!
+timestamp: 2015-03-07T16:57:23.111852
+ALTER TABLE tutorP ADD email CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-03-07T17:01:31.955998
+CREATE TABLE profile(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    date_created TIMESTAMP,
+    email CHAR(512),
+    bio TEXT,
+    college CHAR(512),
+    professor CHAR(512),
+    picture CHAR(512),
+    subject1 CHAR(512),
+    subject2 CHAR(512),
+    subject3 CHAR(512),
+    price CHAR(512),
+    rating CHAR(512)
+);
+success!
+success!
+timestamp: 2015-03-07T17:01:31.969679
+CREATE TABLE studentP(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    date_created TIMESTAMP,
+    body TEXT,
+    subject CHAR(512),
+    price CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

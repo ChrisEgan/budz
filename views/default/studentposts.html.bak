@@ -1,0 +1,34 @@
+{{('message' in globals())}}
+{{extend 'layout.html'}}
+
+<h2>Welcome to BrainyApe</h2>
+
+<h4>List of Students:</h4>
+<br></br>
+{{if len(posts) > 0:}}
+
+{{for pro in userprofile:}}
+{{for p in posts:}}
+<ul>
+<li>
+{{=pro.image}}
+</li>
+
+<li>
+<h5>Tutors: {{=p.name}}</h5>
+<h5>Price: {{=p.price}}</h5>
+<h5>Areas of expertise: {{=p.subject}}</h5>
+<h5>Sold: {{=p.body}}</h5>
+</li>
+</ul>
+<br></br>  
+
+{{pass}}
+{{pass}}
+
+
+
+{{else:}}
+No Posts.
+{{pass}}
+{{=A('Add', _class='btn', _href=URL('default', 'addstudent'))}}

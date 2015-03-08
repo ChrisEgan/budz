@@ -2,7 +2,7 @@ from datetime import datetime
 
 CATEGORY = ['Math', 'History', 'Writing', '-please choose a subject-']
 
-db.define_table('profile',
+db.define_table('tutorP',
     Field('name', 'string'),
     Field('date_created', 'datetime'),
     Field('email'),
@@ -28,7 +28,7 @@ db.define_table('tutorP',
     Field('rating')
     )
 
-db.define_table('studentP',
+db.define_table('tutorP',
     Field('name', 'string'),
     Field('date_created', 'datetime'),
     Field('body', 'text'),

@@ -21,8 +21,6 @@ def index():
     return dict(posts = posts)
 
 def profile():
-    userprofiles=db().select(db.profile.ALL)
-    return dict(userprofiles = userprofiles)
     
 
 
