@@ -10,6 +10,17 @@
 #########################################################################
 
 def index():
+    
+    posts = db().select(db.tutorP.ALL)
+    return dict(posts = posts)
+
+def index3():
+    
+    posts = db().select(db.tutorP.ALL)
+    return dict(posts = posts)
+
+
+def index2():
     """
     example action using the internationalization operator T and flash
     rendered by views/default/index.html or views/generic.html
@@ -33,9 +44,9 @@ def tutorposts():
 
 
 def studentposts():
-    userprofiles=db().select(db.profile.image)
+    #userprofiles=db().select(db.profile.image)
     posts = db().select(db.studentP.ALL)
-    return dict(posts = posts, userprofile = userprofile)
+    return dict(posts = posts)#,userprofile = userprofile)
 
 def profile():
     userprofiles=db().select(db.profile.ALL)

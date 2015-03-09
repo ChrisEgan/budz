@@ -7,12 +7,10 @@
 <br></br>
 {{if len(posts) > 0:}}
 
-{{for pro in userprofile:}}
+
 {{for p in posts:}}
 <ul>
-<li>
-{{=pro.image}}
-</li>
+
 
 <li>
 <h5>Tutors: {{=p.name}}</h5>
@@ -21,9 +19,8 @@
 <h5>Sold: {{=p.body}}</h5>
 </li>
 </ul>
-<br></br>  
+<br></br>
 
-{{pass}}
 {{pass}}
 
 

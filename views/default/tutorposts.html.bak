@@ -1,3 +1,22 @@
+{{('message' in globals())}}
 {{extend 'layout.html'}}
-<h1>This is the default/tutorposts.html template</h1>
-{{=BEAUTIFY(response._vars)}}
+
+<h3>Welcome to BrainyApe</h3>
+
+<h4>List of Tutors:</h4>
+
+{{if len(posts) > 0:}}
+
+<ul>
+{{for p in posts:}}
+<li><h4>Tutors: {{=p.name}}</h4> Price: {{=p.price}} Areas of expertise: {{=p.subject1}} <h5>Sold: {{=p.body}}</h5>
+
+</li>
+{{pass}}
+</ul>
+
+
+{{else:}}
+No Posts.
+{{pass}}
+{{=A('Add', _class='btn', _href=URL('default', 'add'))}}

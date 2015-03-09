@@ -1,0 +1,99 @@
+<head>
+<title>BrainyApe</title>
+
+<style type="text/css">
+.container{
+    width: 800px;
+    background: #00ff4e;
+	margin: 0 auto;
+}
+
+.header{
+    width: 800px;
+    height: 200px;
+}
+
+.logo{
+    width: 150px;
+    height: 150px;
+    background: #ffffff;
+    float: left;
+    vertical-align: top;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.spacer1{
+    <!--background: #000000;-->
+    margin-top: 10px;
+    height: 150px;
+    width: 20px;
+    float: left;
+}
+
+.welcomenav{
+    
+    vertical-align: top;
+    height: 150px;
+    font-size: 120%;
+    margin-left: 60px;
+    float: left;
+}
+.welcome{
+    font-size: 200%;
+}
+
+
+.nav{
+    height: 100px;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.greet{
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+	<div class="container">
+    	<div class="header">
+
+            <div class="logo">
+            </div>
+
+            <div class="spacer1">
+               <h5>    </h5>
+            </div>
+
+            <div class="welcomenav">
+               <div class="welcome">
+                  <h1>BrainyApe </h1>
+               </div>
+
+               
+               <div class="nav">
+                  <a href="index.html">Home</a>|
+                  <a href="tutorposts.html">Tutors</a>|
+                  <a href="studentposts.html">Students</a>|
+                  <a href="#">About Us</a>|
+               	  <a href="#">Contact Us</a>|
+                  <a href="#">Log-In/Register</a>
+               </div>
+            </div>
+
+        </div>
+        <div class="greet">
+            
+        <h5>Welcome To BrainyApe. Where it is easy to find a tutor for students and find students for tutors.</h5>
+        </div>    
+	</div>
+
+</center>
