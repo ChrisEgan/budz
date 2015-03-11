@@ -46,7 +46,7 @@ def tutorposts():
 def studentposts():
     #userprofiles=db().select(db.profile.image)
     posts = db().select(db.studentP.ALL)
-    return dict(posts = posts, userprofile = userprofile)
+    return dict(posts = posts)#,userprofile = userprofile)
 
 def profile():
     userprofiles=db().select(db.profile.ALL)

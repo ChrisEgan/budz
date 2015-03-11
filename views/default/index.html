@@ -103,12 +103,12 @@ li a:hover, li a:active, li a:focus{
 }
 .slideshow{
 	height:300px;
-	width: 700px;
+	width: 800px;
     display: inline-block;
     }
 img{
     height:300px;
-	width: 640px;
+	width: 700px;
 }
 .left_holder{
 	height:160px;
@@ -144,7 +144,10 @@ img{
     width: 450px;
     height: 240px;
     float: left;
-    
+}
+img.tutor2{
+    width: 450px;
+    height: 240px;
 }
 .spacer2{
     background: #000000;
@@ -152,12 +155,15 @@ img{
     width: 50px;
     height: 240px;
 }
-.tutee{
+.student{
     background: #0099FF;
     width: 450px;
     height: 240px;
     float: right;
-
+}
+img.student2{
+    width: 450px;
+    height: 240px;
 }
 </style>
 <script type="text/javascript">
@@ -177,7 +183,7 @@ function slide(x){
 	} else if(imagecount < 1){
 		imagecount = total;
 	}
-	Image.src = "/budz/static/images/img" + imagecount + ".jpg";
+	Image.src = "/budz/static/images/img" + imagecount + "1.jpg";
 }
 window.setInterval(function slideA(){
 	var Image = document.getElementById('img');
@@ -187,7 +193,7 @@ window.setInterval(function slideA(){
 	} else if(imagecount < 1){
 		imagecount = total;
 	}
-	Image.src = "/budz/static/images/img" + imagecount + ".jpg";
+	Image.src = "/budz/static/images/img" + imagecount + "1.jpg";
 },6000);
 </script>
 </head>
@@ -203,7 +209,9 @@ window.setInterval(function slideA(){
             <div class="welcomenav">
                <div class="welcome">
                   <h1>BrainyApe </h1>
+                   
                </div>
+               
                <div class="nav">
                <li>
                   <a href="index.html">Home </a>|
@@ -228,19 +236,19 @@ window.setInterval(function slideA(){
         <div class="slideshow" >
             
             <div class="left_holder"><img src="/budz/static/images/arrow_left.png"  class="left" onClick="slide(-1)" align="top"/></div>
-            <img src="/budz/static/images/img1.jpg"  id="img" align="middle" />
+            <img src="/budz/static/images/img1.jpg"  id="img" align="middle" onClick="slide(1)" />
             <div class="right_holder"><img src="/budz/static/images/arrow_right.png" class="right" onClick="slide(1)" align="top" /></div>
         </div>
         </center>
         
         <div class="tutortutee">
             <div class="tutor">
-               
+                  <img class="tutor2" src="/budz/static/images/tutorscene.jpg"  href="/tutorposts.html" alt="Icon" width="128px" height="128px">
             </div>
             <div class="spacer2">
             </div>    
-            <div class="tutee">
-               
+            <div class="student">
+                  <img class="student2" src="/budz/static/images/studentscene.jpg"  href="/studentposts.html" alt="Icon" width="128px" height="128px">
             </div>
         </div>
 	
