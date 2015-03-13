@@ -36,6 +36,7 @@ def profile():
     return dict(userprofiles=userprofiles)
 
 def editprofile():
+    
     userprofiles = SQLFORM(db.profile)
     if userprofiles.process().accepted:
         # Successful processing.
@@ -43,8 +44,9 @@ def editprofile():
         newPage = auth.user.first_name+'_'+auth.user.last_name[0]
         userName = name=auth.user.first_name+' '+auth.user.last_name[0]+'.'
         db.profile.insert(name=userName)
-        redirect(URL('default', 'profile', args=newPage))
-    
+        redirect(URL('default', 'profile', args=newPage ))
+    return dict(userprofiles = userprofiles)
+
 
 
 def editprofile2():

@@ -407,3 +407,7 @@
 [2015-03-12 19:53:48] EDIT budz/views/default/profile.html: 0
 [2015-03-12 19:54:58] EDIT budz/views/default/index.html: 2
 [2015-03-12 19:57:31] EDIT budz/models/menu.py: 0
+[2015-03-12 21:04:24] EDIT budz/views/default/profile.html: 0
+[2015-03-12 21:04:24] EDIT budz/views/default/profile.html: 0
+[2015-03-12 21:06:42] EDIT budz/controllers/default.py: 2
+[2015-03-12 21:12:24] EDIT budz/controllers/default.py: -1
