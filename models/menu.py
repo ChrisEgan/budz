@@ -36,19 +36,37 @@ def _():
     # shortcuts
     app = request.application
     ctr = request.controller
+    if auth.user:
+        usersPage = auth.user.first_name+'_'+auth.user.last_name[0]
+    #else:
+        #usersPage = none
+
     # useful links to internal and external resources
-    response.menu += [
-        (SPAN('Tutors', _class='highlighted'), False, 'tutorposts.html', [
-        (T('View Listing of Students'), False, URL('budz', 'default', 'studentposts')),
-        (T('Add Post to Tutor List'), False, URL('budz', 'default', 'addtutor')),
-        (T('Tutor Training'), False, URL('budz', 'default', 'index'))]),
+        response.menu += [
+            (SPAN('Tutors', _class='highlighted'), False, 'tutorposts.html', [
+            (T('View Listing of Students'), False, URL('budz', 'default', 'studentposts')),
+            (T('Add Post to Tutor List'), False, URL('budz', 'default', 'addtutor')),
+            (T('Tutor Training'), False, URL('budz', 'default', 'index'))]),
+            (SPAN('Students', _class='highlighted'), False, 'studentposts.html', [
+            (T('View Listing of Tutors'), False, URL('budz', 'default', 'tutorposts')),
+            (T('Add Post to Student List'), False,  URL('budz', 'default', 'addstudent'))
+            ]),
 
-        (SPAN('Students', _class='highlighted'), False, 'studentposts.html', [
-        (T('View Listing of Tutors'), False, URL('budz', 'default', 'tutorposts')),
-        (T('Add Post to Student List'), False, URL('budz', 'default', 'addstudent'))]),
+            (SPAN('Profile', _class='highlighted'), False, URL('budz', 'default', 'profile', args=usersPage))]
+    else:   
+        # useful links to internal and external resources
+        response.menu += [
+            (SPAN('Tutors', _class='highlighted'), False, 'tutorposts.html', [
+            (T('View Listing of Students'), False, URL('budz', 'default', 'studentposts')),
+            (T('Add Post to Tutor List'), False, URL('budz', 'default', 'addtutor')),
+            (T('Tutor Training'), False, URL('budz', 'default', 'index'))]),
+            (SPAN('Students', _class='highlighted'), False, 'studentposts.html', [
+            (T('View Listing of Tutors'), False, URL('budz', 'default', 'tutorposts')),
+            (T('Add Post to Student List'), False,  URL('budz', 'default', 'addstudent'))
+            ]),
 
-        (SPAN('Profile', _class='highlighted'), False, 'profile.html')]
-    
+            (SPAN('Profile', _class='highlighted'), False, URL('budz', 'default', 'index'))]
+   
     
 if DEVELOPMENT_MENU: _()
 
