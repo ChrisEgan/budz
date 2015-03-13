@@ -1,100 +1,10 @@
-<html>
-    
-
+{{('message' in globals())}}
+{{extend 'layout.html'}}<html>
 <head>
 <title>BrainyApe</title>
 
 <style type="text/css">
-body{
-    background-color: #C0C0C0;
-}
-.container{
-    width: 950px;
-    background: #00ff4e;
-	margin: 0 auto;
-}
 
-.header{
-    background: #0033FF;
-
-    <!--position: absolute;-->
-    width: 900px;
-    height: 130px;
-}
-
-.logo{
-    width: 130px;
-    height: 130px;
-    background: #ffffff;
-    float: left;
-    vertical-align: top;
-    margin-left: 10px;
-}
-img.monkey{
-    width: 130px;
-    height: 130px;
-}
-
-<!--.spacer1{
-    <!--background: #000000;-->
-    vertical-align: top;
-    height: 130px;
-    width: 10px;
-    float: left;
-}-->
-
-.welcomenav{
-    
-    vertical-align: top;
-    height: 130px;
-    width: 730px;
-    font-size: 90%;
-    margin-left: 60px;
-    float: right;
-    float: top;
-}
-.welcome{
-    height: 70px;
-    font-size: 130%;
-    font-family: Georgia, serif;
-    color: #00ff4e;
-}
-
-
-.nav{
-    font-size: 110%;
-    height: 25px;
-    display: inline-block;
-    margin-right: 30px;
-    background-color: #C0C0C0;
-    padding: 5px 5px; 5px; 5px;
-
-}
-.nav.a{
-   <!-- background: #ffffff;-->
-}
-li{
-   list-style-type: none;
-}
-li a, li:visited	{
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-right: 20px;
-	padding-left: 20px;
-	margin: none;
-	border-bottom: 1px solid #000;
-	display: inline;
-	color: #00ff4e;
-	text-decoration: none;
-	font-family: arial, helvetica, sans-serif;
-	text-align: center;
-}
-
-li a:hover, li a:active, li a:focus{
-	border-right:#000;
-	color: #FFF;
-	font-size: 100%;
-}
 .greet{
     margin-top: 150 px;
     margin-left: auto;
@@ -201,11 +111,11 @@ window.setInterval(function slideA(){
 <body>
 	<div class="container">
     	
-        <div class="header">
+        <!--<div class="header">
             <div class="logo">
                 <img class="monkey" src="/budz/static/images/monkey.jpg" alt="Icon" width="128px" height="128px">
             </div>
-        <!--    <div class="spacer1"></div>  -->
+          <div class="spacer1"></div>  
             <div class="welcomenav">
                <div class="welcome">
                   <h1>BrainyApe </h1>
@@ -223,7 +133,7 @@ window.setInterval(function slideA(){
                </li>
                </div>
             </div>
-        </div>
+        </div>-->
         <center>
         <div class="greet">
         <h2>Welcome To BrainyApe.</h2>
@@ -240,18 +150,18 @@ window.setInterval(function slideA(){
             <div class="right_holder"><img src="/budz/static/images/arrow_right.png" class="right" onClick="slide(1)" align="top" /></div>
         </div>
         </center>
-        
+        <center>
         <div class="tutortutee">
             <div class="tutor">
-                  <img class="tutor2" src="/budz/static/images/tutorscene.jpg"  href="/tutorposts.html" alt="Icon" width="128px" height="128px">
+                  <img class="tutor2" src="/budz/static/images/tutoringscene.jpg"  href="/tutorposts.html" alt="Icon" >
             </div>
             <div class="spacer2">
             </div>    
             <div class="student">
-                  <img class="student2" src="/budz/static/images/studentscene.jpg"  href="/studentposts.html" alt="Icon" width="128px" height="128px">
+                  <img class="student2" src="/budz/static/images/studentscene.jpg"  href="/studentposts.html" alt="Icon" >
             </div>
         </div>
-	
+	    </center>
     </div>
 </body>
 </html>

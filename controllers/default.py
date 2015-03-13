@@ -33,9 +33,41 @@ def index2():
 
 def profile():
     userprofiles=db().select(db.profile.ALL)
-    return dict(userprofiles = userprofiles)
+    return dict(userprofiles=userprofiles)
+
+def editprofile():
+    userprofiles = SQLFORM(db.profile)
+    if userprofiles.process().accepted:
+        # Successful processing.
+        session.flash = T("Thanks for editing your Profile")
+        newPage = auth.user.first_name+'_'+auth.user.last_name[0]
+        userName = name=auth.user.first_name+' '+auth.user.last_name[0]+'.'
+        db.profile.insert(name=userName)
+        redirect(URL('default', 'profile', args=newPage))
     
 
+
+def editprofile2():
+    title = request.args(0) or ''
+    
+    userprofiles = SQLFORM.factory(
+        Field('subject1', label = 'Subject 1', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!"),default ="-please choose a subject-", required = True),
+        Field('subject2', label = 'Subject 2 (optional)', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),
+        Field('subject3', label = 'Subject 3 (optional)', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),
+        Field('price', requires = IS_FLOAT_IN_RANGE(0, 100.00, error_message='The price should be in the range 0..100')),
+        Field('bio', 'text', label = 'Service Description', requires = IS_NOT_EMPTY("Please enter a description of your services.")),
+        Field('picture', label = 'Profile Picture')
+    )
+    
+    if userprofiles.process().accepted:
+        newPage = auth.user.first_name+'_'+auth.user.last_name[0]
+        userName = name=auth.user.first_name+' '+auth.user.last_name[0]+'.'
+        db.profile.insert(name=userName, date_created=datetime.utcnow(), bio=userprofiles.vars.bio,
+                        subject1=userprofiles.vars.subject1, subject2=userprofiles.vars.subject2, subject3=userprofiles.vars.subject3, price=userprofiles.vars.price, picture=userprofiles.vars.picture)
+        redirect(URL('default', 'profile', args=newPage))
+    
+
+    return dict(userprofiles = userprofiles)
 
 def tutorposts():
     #userprofiles=db().select(db.profile.college)
@@ -48,9 +80,6 @@ def studentposts():
     posts = db().select(db.studentP.ALL)
     return dict(posts = posts)#,userprofile = userprofile)
 
-def profile():
-    userprofiles=db().select(db.profile.ALL)
-    return dict(userprofiles=userprofiles)
 
 def addtutor():   
     title = request.args(0) or ''
