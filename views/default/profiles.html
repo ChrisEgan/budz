@@ -1,0 +1,21 @@
+{{('message' in globals())}}
+{{extend 'layout.html'}}
+
+<h2>Welcome to BrainyApe</h2>
+<br>
+<ul>
+
+<table>
+    <tr>
+        <td><img src="{{=URL('download', args = author.picture)}}" height=50 width=50/></td><td><h3>{{=author.first_name + author.last_name}}</h3></td><td></td>
+    </tr>
+    <tr>
+        <td></td><td>Price: {{=author.price}}</td><td>Areas of expertise: {{=author.subject1}}</td>
+    </tr>
+    <tr>
+        <td></td><td><h4>Bio:{{=author.bio}} </h4></td><td></td>
+    </tr>
+
+    </table>
+
+{{=A('Edit', _class='btn', _href=URL('default', 'user', args='profile'))}}

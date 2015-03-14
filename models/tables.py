@@ -1,5 +1,11 @@
 from datetime import datetime
 
+def get_username():
+    name = 'Nobody'
+    if auth.user:
+        name = auth.user.first_name+'_'+auth.user.last_name[0]
+    return name
+
 CATEGORY = ['Math', 'History', 'Writing', '-please choose a subject-']
 YEAR = ['Freshman', 'Sophomores', 'Junior', 'Senior', 'Grad-Student', 'Alumni']
 
@@ -36,7 +42,6 @@ db.define_table('studentP',
     Field('subject'),
     Field('price'), #per hour
     )
-
 
 db.profile.student_status.requires = IS_IN_SET(YEAR)
 db.profile.student_status.default = 'Misc'

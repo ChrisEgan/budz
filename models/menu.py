@@ -6,7 +6,7 @@
 #########################################################################
 
 response.logo = A(B("BrainyApe"),XML('&trade;&nbsp;'),
-                  _class="brand",_href="index.html")
+                  _class="brand",_href=URL('default', 'index'))
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 
@@ -44,28 +44,28 @@ def _():
     # useful links to internal and external resources
         response.menu += [
             (SPAN('Tutors', _class='highlighted'), False, 'tutorposts.html', [
-            (T('View Listing of Students'), False, URL('budz', 'default', 'studentposts')),
-            (T('Add Post to Tutor List'), False, URL('budz', 'default', 'addtutor')),
-            (T('Tutor Training'), False, URL('budz', 'default', 'index'))]),
+            (T('View Listing of Students'), False, URL('default', 'studentposts')),
+            (T('Add Post to Tutor List'), False, URL('default', 'addtutor')),
+            (T('Tutor Training'), False, URL('default', 'index'))]),
             (SPAN('Students', _class='highlighted'), False, 'studentposts.html', [
-            (T('View Listing of Tutors'), False, URL('budz', 'default', 'tutorposts')),
-            (T('Add Post to Student List'), False,  URL('budz', 'default', 'addstudent'))
+            (T('View Listing of Tutors'), False, URL('default', 'tutorposts')),
+            (T('Add Post to Student List'), False,  URL('default', 'addstudent'))
             ]),
 
-            (SPAN('Profile', _class='highlighted'), False, URL('budz', 'default', 'profile', args=usersPage))]
+            (SPAN('Profile', _class='highlighted'), False, URL('default', 'profile', args=usersPage))]
     else:   
         # useful links to internal and external resources
         response.menu += [
             (SPAN('Tutors', _class='highlighted'), False, 'tutorposts.html', [
-            (T('View Listing of Students'), False, URL('budz', 'default', 'studentposts')),
-            (T('Add Post to Tutor List'), False, URL('budz', 'default', 'addtutor')),
-            (T('Tutor Training'), False, URL('budz', 'default', 'index'))]),
+            (T('View Listing of Students'), False, URL('default', 'studentposts')),
+            (T('Add Post to Tutor List'), False, URL('default', 'addtutor')),
+            (T('Tutor Training'), False, URL('default', 'index'))]),
             (SPAN('Students', _class='highlighted'), False, 'studentposts.html', [
-            (T('View Listing of Tutors'), False, URL('budz', 'default', 'tutorposts')),
-            (T('Add Post to Student List'), False,  URL('budz', 'default', 'addstudent'))
+            (T('View Listing of Tutors'), False, URL('default', 'tutorposts')),
+            (T('Add Post to Student List'), False,  URL('default', 'addstudent'))
             ]),
 
-            (SPAN('Profile', _class='highlighted'), False, URL('budz', 'default', 'index'))]
+            (SPAN('Profile', _class='highlighted'), False, URL('default', 'index'))]
    
     
 if DEVELOPMENT_MENU: _()

@@ -9,6 +9,12 @@
 ## - api is an example of Hypermedia API support and access control
 #########################################################################
 
+def get_username():
+    name = 'Nobody'
+    if auth.user:
+        name = auth.user.first_name+'_'+auth.user.last_name[0]
+    return name
+
 def index():
     
     posts = db().select(db.tutorP.ALL)
@@ -32,9 +38,14 @@ def index2():
     return dict(posts = posts)
 
 def profile():
-    userperson = auth.user
+    author = auth.user
     userprofiles=db().select(db.profile.ALL)
-    return dict(userprofiles=userprofiles, userperson = userperson)
+    return dict(userprofiles=userprofiles, author = author)
+
+def profiles():
+    author = auth.user
+    userprofiles=db().select(db.profile.ALL)
+    return dict(userprofiles=userprofiles, author = author)
 
 def editprofile():
     
@@ -73,9 +84,10 @@ def editprofile2():
     return dict(userprofiles = userprofiles)
 
 def tutorposts():
+    author = auth.user
     #userprofiles=db().select(db.profile.college)
     posts = db().select(db.tutorP.ALL)
-    return dict(posts = posts)
+    return dict(posts = posts, author = author)
 
 
 def studentposts():
