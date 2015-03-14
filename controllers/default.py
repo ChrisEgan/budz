@@ -32,8 +32,9 @@ def index2():
     return dict(posts = posts)
 
 def profile():
+    userperson = auth.user
     userprofiles=db().select(db.profile.ALL)
-    return dict(userprofiles=userprofiles)
+    return dict(userprofiles=userprofiles, userperson = userperson)
 
 def editprofile():
     

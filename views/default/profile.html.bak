@@ -3,21 +3,30 @@
 
 <h2>Welcome to BrainyApe</h2>
 <br>
-{{if len(userprofiles) > 0:}}
-{{for p in userprofiles:}}
 <ul>
 
-<h3>{{=p.name}}</h3>
+<h3>{{=userperson.first_name}}</h3>
 
-<ul>
-<img src="{{=URL('download', args = p.picture)}}" height=50 width=50/>
     
-<li><h4>Bio:{{=p.bio}} </h4> Price: {{=p.price}} Areas of expertise: {{=p.subject1}}
+<li><h4>Bio:{{=userperson.bio}} </h4> Price: {{=userperson.price}} Areas of expertise: {{=userperson.subject1}}
 
 </li>
 
 </ul>
 
-{{pass}}
-{{pass}}
+
 {{=A('Edit', _class='btn', _href=URL('default', 'editprofile', vars=dict(edit='yes')))}}
+
+    
+<table>
+    <tr>
+        <td><img src="{{=URL('download', args = userperson.picture)}}" height=50 width=50/></td><td><h3>{{=userperson.first_name + userperson.last_name}}</h3></td><td></td>
+    </tr>
+    <tr>
+        <td></td><td>Price: {{=userperson.price}}</td><td>Areas of expertise: {{=userperson.subject1}}</td>
+    </tr>
+    <tr>
+        <td></td><td><h4>Bio:{{=userperson.bio}} </h4></td><td></td>
+    </tr>
+
+    </table>

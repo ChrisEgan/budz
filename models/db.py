@@ -45,6 +45,17 @@ from gluon.tools import Auth, Service, PluginManager
 
 auth = Auth(db)
 
+auth.settings.extra_fields['auth_user']=[
+    Field('date_created', 'datetime'),
+    Field('bio', 'text'),
+    Field('college'),
+    Field('student_status'),
+    Field('picture', 'upload'),
+    Field('subject1'),
+    Field('subject2'),
+    Field('subject3'),
+    Field('price'), #per hour
+    Field('rating')]
 
 
 service = Service()

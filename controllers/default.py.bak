@@ -32,11 +32,11 @@ def index2():
     return dict(posts = posts)
 
 def profile():
+    userperson = auth.user
     userprofiles=db().select(db.profile.ALL)
-    return dict(userprofiles=userprofiles)
+    return dict(userprofiles=userprofiles, userperson = userperson)
 
 def editprofile():
-    edit = ''
     
     userprofiles = SQLFORM(db.profile)
     if userprofiles.process().accepted:
@@ -45,7 +45,7 @@ def editprofile():
         newPage = auth.user.first_name+'_'+auth.user.last_name[0]
         userName = name=auth.user.first_name+' '+auth.user.last_name[0]+'.'
         db.profile.insert(name=userName)
-        redirect(URL('default', 'profile', args=newPage, edit = 'yes'))
+        redirect(URL('default', 'profile', args=newPage ))
     return dict(userprofiles = userprofiles)
 
 
