@@ -7,15 +7,15 @@
 
 <table>
     <tr>
-        <td><img src="{{=URL('download', args = userperson.picture)}}" height=50 width=50/></td><td><h3>{{=userperson.first_name + userperson.last_name}}</h3></td><td></td>
+        <td><img src="{{=URL('download', args = author.picture)}}" height=50 width=50/></td><td><h3>{{=author.first_name + author.last_name}}</h3></td><td></td>
     </tr>
     <tr>
-        <td></td><td>Price: {{=userperson.price}}</td><td>Areas of expertise: {{=userperson.subject1}}</td>
+        <td></td><td>Price: {{=author.price}}</td><td>Areas of expertise: {{=author.subject1}}</td>
     </tr>
     <tr>
-        <td></td><td><h4>Bio:{{=userperson.bio}} </h4></td><td></td>
+        <td></td><td><h4>Bio:{{=author.bio}} </h4></td><td></td>
     </tr>
 
     </table>
 
-{{=A('Edit', _class='btn', _href=URL('default', 'editprofile', vars=dict(edit='yes')))}}
+{{=A('Edit', _class='btn', _href=URL('default', 'user', args='profile'))}}
