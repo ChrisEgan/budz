@@ -1,20 +1,69 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
+<style type="text/css">
+ul{
+   list-style-type: none;
+}
+.addbut{
+margin-left: 30px; 
+}
+.welcome{
+	font-family: !important;
+}
 
-<h3>Welcome to BrainyApe</h3>
+.profilecontent{
+
+}
+</style>
+<body>
+
+<center>
+<h3 class="welcome">Welcome to BrainyApe</h3>
 
 <h4>List of Tutors:</h4>
 
+<br>
+
+</center>
 {{if len(posts) > 0:}}
 
 <ul>
 {{for p in posts:}}
-<li><h4>Tutors: {{=p.name}}</h4> 
-Price: {{=p.price}} Areas of expertise: {{=p.subject1}} 
-<h5>Sold: {{=p.body}}</h5>
+<div class="well">
+<table>
+<tr><td>
+<div class"profilepic">
+
+<img src="{{=URL('download', args = p.picture)}}" height=200 width=200/>
+
+</div>
+</td>
+<td>
+
+<div class="profilecontent"
+<strong><h4>{{=p.nice_name}}</h4></strong>
+<h4> {{=p.college}}</h4> 
+<br>
+Areas of expertise: {{=p.subject1}}, {{=p.subject2}}, {{=p.subject3}}
+<br>
+
+
+
+
+
+
+
+
+
+
 {{=A('View Profile', _class='btn', _href=URL('default', 'profiles', args= p.name))}}
 
-</li>
+
+</div>
+</td>
+</tr>
+</table>
+</div>
 {{pass}}
 </ul>
 
@@ -22,4 +71,7 @@ Price: {{=p.price}} Areas of expertise: {{=p.subject1}}
 {{else:}}
 No Posts.
 {{pass}}
+<div class="addbut">
 {{=A('Add', _class='btn', _href=URL('default', 'addtutor'))}}
+</div>
+</body>

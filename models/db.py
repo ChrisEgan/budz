@@ -47,12 +47,14 @@ auth = Auth(db)
 CATEGORY = ['Math', 'History', 'Writing', '-please choose a subject-']
 COLLEGES = ['College Eight', 'College Nine', 'College Ten', 'Cowell College', 
             'Crown College', 'Kresge College', 'Merrill College', 'Oakes College', 'Porter College', 'Stevenson College', 'Unaffiliated']
+GENDERS = ['Male', 'Female', 'Other']
 PRICERANGE = ['Alternative Exchange',1,2,3,4,5,6,7,8,9,10,15,20,25,30,35,40,45,50]
 YEAR = ['Freshman', 'Sophomores', 'Junior', 'Senior', 'Grad-Student', 'Alumni']
 
 auth.settings.extra_fields['auth_user']=[
     Field('date_created', 'datetime'),
     Field('bio', 'text'),
+    Field('gender',requires = IS_IN_SET(GENDERS), default = 'Other'),
     Field('college', requires = IS_IN_SET(COLLEGES), default = 'Unaffiliated'),
     Field('student_status', requires = IS_IN_SET(YEAR, zero = '~Your level of education~'), required = True),
     Field('picture', 'upload'),
@@ -61,7 +63,9 @@ auth.settings.extra_fields['auth_user']=[
     Field('subject3', label = 'Subject 3 (optional)', requires = IS_IN_SET(CATEGORY, zero = "-please choose a subject-"), required = False),
 
     Field('price', requires = IS_IN_SET(PRICERANGE), default = 'Alternative Exchange' ), #per hour
-    Field('rating', writable = False)]
+    Field('rating', writable = False),
+    Field('tutorpost','boolean', writable = False, default = False),
+    Field('studentpost','boolean', writable = False, default = False)]
 
 service = Service()
 plugins = PluginManager()
