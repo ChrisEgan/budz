@@ -43,9 +43,11 @@ def profile():
     return dict(userprofiles=userprofiles, author = author)
 
 def profiles():
+    user = request.args(0)
+    theProfile = db(db.profile.name == user).select().first()
     author = auth.user
     userprofiles=db().select(db.profile.ALL)
-    return dict(userprofiles=userprofiles, author = author)
+    return dict(user = theProfile, userprofiles=userprofiles, author = author)
 
 def editprofile():
     
@@ -110,8 +112,8 @@ def addtutor():
     if form.process().accepted:
         tutName = auth.user.first_name+'_'+auth.user.last_name[0]
         newPage = db.tutorP.insert(name=auth.user.first_name+' '+auth.user.last_name[0]+'.')
-        db.tutorP.insert(name=tutName, date_created=datetime.utcnow(), body=form.vars.body, 
-                        subject1=form.vars.subject1, subject2=form.vars.subject2, subject3=form.vars.subject3, price=form.vars.price)
+        db.profile.insert(name=tutName, nice_name=newpage, date_created=datetime.utcnow(), body=form.vars.body, 
+                        subject1=form.vars.subject1, subject2=form.vars.subject2, subject3=form.vars.subject3, price=form.vars.price, picture=auth.user.picture)
         redirect(URL('default', 'index', args=auth.user.first_name+auth.user.last_name[0]))
     
     return dict(form = form)

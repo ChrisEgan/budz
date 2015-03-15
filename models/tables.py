@@ -11,9 +11,11 @@ YEAR = ['Freshman', 'Sophomores', 'Junior', 'Senior', 'Grad-Student', 'Alumni']
 
 db.define_table('profile',
     Field('name', 'string'),
+    Field('nice_name', 'string'),
     Field('date_created', 'datetime'),
     Field('email'),
     Field('bio', 'text'),
+    Field('body', 'text'),
     Field('college'),
     Field('student_status'),
     Field('picture', 'upload'),
