@@ -1,19 +1,72 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
+<style type="text/css">
 
+.well{
+    margin: 30px;
+    width: 1100px;
+}
+.avatar{
+    width: 200px;
+    padding-left:5px;
+    padding-right:20px;
+}
+.info{
+    width: 200px;
+}
+p{
+    text-align-last: justify;
+}
+.bio{
+    width: 300px;
+    padding-left:20px;
+    padding-right:10px;
+}
+.bio2{
+    width: 300px;
+    padding-left:10px;
+    padding-right:5px;
+}
+
+</style>
+<body>
+
+<center>
 <h2>Welcome to BrainyApe</h2>
 <br>
-<ul>
+</center>
 
+<div class='well'>
 <table>
-    <tr>
-        <td><img src="{{=URL('download', args = user.picture)}}" height=50 width=50/></td><td><h3>{{=user.name}}</h3></td><td></td>
-    </tr>
-    <tr>
-        <td></td><td>Price: {{=user.price}}</td><td>Areas of expertise: {{=user.subject1}}</td>
-    </tr>
-    <tr>
-        <td></td><td><h4>Bio:{{=user.bio}} </h4></td><td></td>
-    </tr>
-
-    </table>
+<tr>
+    <td>
+        <div class="avatar">
+            <img src="{{=URL('download', args = user.picture)}}" height=200 width=200/>
+        </div>
+    </td>
+    <td>
+        <div class="info">
+            <legend><h2>{{=user.nice_name}} </h2></legend>
+            <h4>{{=user.college}}</h4>
+            <h6>{{=user.student_status}}, {{=user.major}}</h6>
+            <h5>Areas of expertise:  </h5> {{=user.subject1}}, {{=user.subject2}},  {{=user.subject3}}
+            <h5>Price:  </h5>  {{=user.price}}
+        </div>
+     </td>
+     <td>
+         <div class="bio">
+             <p>
+             {{=user.bio}}
+             </p>
+         </div>
+     </td>
+     <td>
+         <div class="bio2">
+             <p>
+             {{=user.bio2}}
+             </p>
+         </div>
+     </td>
+</tr>
+</table>
+</body>

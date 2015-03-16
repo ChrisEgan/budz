@@ -45,6 +45,7 @@ from gluon.tools import Auth, Service, PluginManager
 
 auth = Auth(db)
 CATEGORY = ['Math', 'History', 'Writing', '-please choose a subject-']
+MAJOR = ['Math', 'History', 'Writing', '-please choose a major-']
 COLLEGES = ['College Eight', 'College Nine', 'College Ten', 'Cowell College', 
             'Crown College', 'Kresge College', 'Merrill College', 'Oakes College', 'Porter College', 'Stevenson College', 'Unaffiliated']
 GENDERS = ['Male', 'Female', 'Other']
@@ -53,11 +54,13 @@ YEAR = ['Freshman', 'Sophomores', 'Junior', 'Senior', 'Grad-Student', 'Alumni']
 
 auth.settings.extra_fields['auth_user']=[
     Field('date_created', 'datetime'),
-    Field('bio', 'text'),
+    Field('bio', 'text', default=''),
+    Field('bio2', 'text', default=''),
     Field('gender',requires = IS_IN_SET(GENDERS), default = 'Other'),
     Field('college', requires = IS_IN_SET(COLLEGES), default = 'Unaffiliated'),
     Field('student_status', requires = IS_IN_SET(YEAR, zero = '~Your level of education~'), required = True),
     Field('picture', 'upload'),
+    Field('major', label = 'Major 1', requires = IS_IN_SET(CATEGORY, error_message="choose a major!", zero = "-please choose a Major-"), required = True),
     Field('subject1', label = 'Subject 1', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!", zero = "-please choose a subject-"), required = True),
     Field('subject2', label = 'Subject 2 (optional)', requires = IS_IN_SET(CATEGORY, zero="-please choose a subject-"), required = False),
     Field('subject3', label = 'Subject 3 (optional)', requires = IS_IN_SET(CATEGORY, zero = "-please choose a subject-"), required = False),

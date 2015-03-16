@@ -1,24 +1,28 @@
 {{('message' in globals())}}
-{{extend 'layout.html'}}<html>
+{{extend 'layout.html'}}
+<html>
 <head>
 <title>BrainyApe</title>
 
 <style type="text/css">
+.container{
+     width: 1300px;
+     padding-left: 20px;
+        float:left;
 
+}
 .greet{
     margin-top: 150 px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 950px;
+
 }
-.slideshow{
-	height:300px;
-	width: 800px;
-    display: inline-block;
+.slideshow{ 
+    width: 1300px;
+    float:left;
+    height: 490px;
     }
 img{
-    height:300px;
-	width: 700px;
+   width: 640px;
+    height: 480px;
 }
 .left_holder{
 	height:160px;
@@ -33,47 +37,109 @@ img{
     float:right;
 }
 .left{
-	height: 30px;
-	width: 30px;
+	height: 40px;
+	width: 40px;
     float:right;
 }
 
 .right{
-	height:30px;
-	width:30px;
+	height:40px;
+	width:40px;
     float:left;
 }
+
+.aboutus{
+
+    width: 1300px;
+    float:left;
+}
+.tutor11{
+    height:200px;
+	width:200px;
+    background-color: yellow;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 50%;
+}
+.tutor111{
+    height:200px;
+	width:200px;
+    opacity: 0.9;
+    background-position: 50%;
+    border-radius: 50%;
+    padding-left:5px;
+    padding-top:5px;
+}
+.tutor22{
+    height:210px;
+	width:210px;
+    background-color: yellow;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 50%;
+}
+.tutor222{
+    height:200px;
+	width:200px;
+    opacity: 0.9;
+    background-position: 50%;
+    border-radius: 50%;
+    padding-left:5px;
+    padding-top:5px;
+}
+.student33{
+    height:210px;
+	width:210px;
+    background-color: yellow;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 50%;
+}
+.student333{
+    height:215px;
+	width:215px;
+    opacity: 0.9;
+    background-position: 50%;
+    border-radius: 50%;
+    padding-left:5px;
+    padding-top:5px;
+}
+.tutor1desc{
+    width:200px;
+}
+.tutor2desc{
+    width:200px;
+}
+.student1desc{
+    width:200px;
+}
 .tutortutee{
-    width: 950px;
-    height: 240px;
-    text-align: center;
+    background-color: black;
+
+    width: 1300px;
+    height: 500px;
+    float:left;
 
 }
 .tutor{
     background: #0066FF;
-    width: 450px;
-    height: 240px;
-    float: left;
+    width: 640px;
+    height: 480px;
 }
 img.tutor2{
-    width: 450px;
-    height: 240px;
+    width: 640px;
+    height: 480px;
 }
-.spacer2{
-    background: #000000;
-    float: left;
-    width: 50px;
-    height: 240px;
-}
+
 .student{
     background: #0099FF;
-    width: 450px;
-    height: 240px;
-    float: right;
+    width: 640px;
+    height: 480px;
+    
 }
 img.student2{
-    width: 450px;
-    height: 240px;
+    width: 640px;
+    height: 480px;
 }
 </style>
 <script type="text/javascript">
@@ -109,59 +175,113 @@ window.setInterval(function slideA(){
 </head>
 
 <body>
+<center>
 	<div class="container">
-    	
-        <!--<div class="header">
-            <div class="logo">
-                <img class="monkey" src="/budz/static/images/monkey.jpg" alt="Icon" width="128px" height="128px">
-            </div>
-          <div class="spacer1"></div>  
-            <div class="welcomenav">
-               <div class="welcome">
-                  <h1>BrainyApe </h1>
-                   
-               </div>
-               
-               <div class="nav">
-               <li>
-                  <a href="index.html">Home </a>|
-                  <a href="tutorposts.html">Tutors </a>|
-                  <a href="studentposts.html">Students </a>|
-                  <a href="#">About Us </a>|
-               	  <a href="#">Contact Us </a>|
-                  <a href="/budz/default/user/login">Log-In/Register </a>
-               </li>
-               </div>
-            </div>
-        </div>-->
         <center>
         <div class="greet">
         <h2>Welcome To BrainyApe.</h2>
         <h4>Where it is easy to find a tutor for students and find students for tutors.</h4>
         </div>
         </center>
-       
-        
+
         <center>
         <div class="slideshow" >
-            
+            <table>
+            <tr>
+            <td>
             <div class="left_holder"><img src="/budz/static/images/arrow_left.png"  class="left" onClick="slide(-1)" align="top"/></div>
-            <img src="/budz/static/images/img1.jpg"  id="img" align="middle" onClick="slide(1)" />
-            <div class="right_holder"><img src="/budz/static/images/arrow_right.png" class="right" onClick="slide(1)" align="top" /></div>
+             </td>
+                <td>
+                <img src="/budz/static/images/img31.jpg"  id="img" align="middle" onClick="slide(1)" />
+            </td>
+                <td>
+                <div class="right_holder"><img src="/budz/static/images/arrow_right.png" class="right" onClick="slide(1)" align="top" /></div>
+        </td>
+             </tr>            
+            </table>
         </div>
         </center>
-        
-        <div class="tutortutee">
-            <div class="tutor">
-                  <img class="tutor2" src="/budz/static/images/tutoringscene.jpg"  href="/tutorposts.html" alt="Icon" >
+        <center>
+            
+        <div class="aboutus">
+            <table>
+            <tr>
+            <td>
+            <div class="tutor11">
+                 <img class="tutor111" src="/budz/static/images/graduate_male.png"  alt="Icon" >
             </div>
-            <div class="spacer2">
-            </div>    
-            <div class="student">
-                  <img class="student2" src="/budz/static/images/studentscene.jpg"  href="/studentposts.html" alt="Icon" >
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+            <div class="tutor22">
+                 <img class="tutor222" src="/budz/static/images/network.png"  alt="Icon" >
             </div>
+                     </td>
+                <td></td>
+                <td></td>
+                  <td></td>
+                <td></td>
+                <td>
+            <div class="student33">
+                  <img class="student333" src="/budz/static/images/newspaper.jpg"  alt="Icon" >
+            </div>
+                   </td>
+             </tr>            
+                  <tr>
+            <td>
+            <div class="tutor1desc">
+                 <p>We have the tools for you. Experts that can show the way.</p>
+            </div>
+                 </td>
+                        <td></td>
+                        <td></td>
+                <td></td>
+                <td></td>
+                <td>
+            <div class="tutor2desc">
+                   <p>Easy way to expond and find new students.</p>
+
+            </div>
+                     </td>
+                        <td></td>
+                        <td></td>
+                <td></td>
+                <td></td>
+                <td>
+            <div class="student1desc">
+                 <p>Use our database of educated users and inavative search interface to find the service your're looking for!</p>
+            </div>
+                   </td>
+             </tr>            
+            </table>
         </div>
-	
+	    </center>
+        <br>
+        <br>
+        
+        <center>
+        <div class="tutortutee">
+            <table>
+            <tr>
+            <td>
+            <div class="tutor">
+                   <a href="/budz/default/studentposts.html"><img class="tutor2" src="/budz/static/images/tutoringscene.jpg" alt="Icon" ></a>
+            </div>
+                 </td>
+           
+                <td>
+            <div class="student">
+                <a href="/budz/default/tutorposts.html"><img class="student2" src="/budz/static/images/studentscene.jpg" alt="Icon"></a>
+            </div>
+                    </td>
+             </tr>                  
+            </table>
+        </div>
+	    </center>
     </div>
+</center>
 </body>
 </html>

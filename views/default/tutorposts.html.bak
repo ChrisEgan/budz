@@ -1,17 +1,80 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
+<style type="text/css">
+.well{
+    float: left;
+    padding-left: 25px;
+    width: 900px;
+}
+ul{
+   list-style-type: none;
+}
+.price{
+    color: red;
+}
+.addbut{
+margin-left: 30px; 
+}
+.welcome{
+	font-family: !important;
+}
+.college{
+    padding-top:5px;
+}
+.subject{
+    padding-top:25px;
+}
+.profilepic{
+width: 200px;
+}
+.profilecontent{
+width: 350px;
+} 
+.posts{
+ background-color: black;
+    
+}
+</style>
 
-<h3>Welcome to BrainyApe</h3>
-
-<h4>List of Tutors:</h4>
-
+<body>
+<center>
+   <h3 class="welcome">Welcome to BrainyApe</h3>
+   <h4>List of Tutors:</h4>
+   <br>
+</center>
+<div class='posts'>
 {{if len(posts) > 0:}}
-
 <ul>
 {{for p in posts:}}
-<li><h4>Tutors: {{=p.name}}</h4> Price: {{=p.price}} Areas of expertise: {{=p.subject1}} <h5>Sold: {{=p.body}}</h5>
-
-</li>
+<div class="well">
+<table><tr>
+     <td>
+     <div class="profilepic">
+        <img src="{{=URL('download', args = p.picture)}}" height=200 width=200/>
+     </div>
+     </td>
+     <td>
+     <div class="profilecontent">
+        <h2>{{=p.nice_name}}</h2>
+        <h4>{{=p.college}}</h4>
+         <table><tr><td>
+            {{=p.student_status}},</td><td>{{=p.major}}
+        </td></tr></table>
+        <table><tr><td>
+            Areas of expertise:</td><td>{{=p.subject1}}, {{=p.subject2}}, {{=p.subject3}}
+        </td></tr></table>
+     </div>
+     </td>
+     <td>
+     <div class="add">
+         <div class='price'><h5>${{=p.price}}/hour</h5></div>
+        <p>{{=p.body}}</p>
+       {{=A('View Profile', _class='btn', _href=URL('default', 'profiles', args= p.name))}}
+     </div>
+     </td>
+</tr>
+</table>
+</div>
 {{pass}}
 </ul>
 
@@ -19,4 +82,9 @@
 {{else:}}
 No Posts.
 {{pass}}
-{{=A('Add', _class='btn', _href=URL('default', 'add'))}}
+    </div>
+
+<div class='tutorposts'>
+{{=A('Add Tutor Post', _class='btn', _href=URL('default', 'user', args='profile'))}}
+</div>
+</body>
