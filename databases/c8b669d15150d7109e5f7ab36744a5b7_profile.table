@@ -199,7 +199,7 @@ sS'type'
 p57
 S'string'
 p58
-ssS'subject2'
+ssS'nice_name'
 p59
 (dp60
 g14
@@ -207,7 +207,7 @@ I512
 sg15
 I00
 sg16
-I12
+I3
 sg17
 S'CHAR(512)'
 p61
@@ -231,7 +231,7 @@ sg19
 I00
 sg20
 g21
-ssS'nice_name'
+ssS'subject2'
 p65
 (dp66
 g14
@@ -239,7 +239,7 @@ I512
 sg15
 I00
 sg16
-I3
+I12
 sg17
 S'CHAR(512)'
 p67

@@ -70,7 +70,7 @@ def editprofile2():
         Field('subject1', label = 'Subject 1', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!"),default ="-please choose a subject-", required = True),
         Field('subject2', label = 'Subject 2 (optional)', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),
         Field('subject3', label = 'Subject 3 (optional)', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),
-        Field('price', requires = IS_FLOAT_IN_RANGE(0, 100.00, error_message='The price should be in the range 0..100')),
+        Field('price', requires = IS_IN_SET(PRICERANGE), default = 'Alternative Exchange' ), #per hour
         Field('bio', 'text', label = 'Service Description', requires = IS_NOT_EMPTY("Please enter a description of your services.")),
         Field('picture', label = 'Profile Picture')
     )
@@ -86,9 +86,11 @@ def editprofile2():
     return dict(userprofiles = userprofiles)
 
 def tutorposts():
+    user = request.args(0)
+    theProfile = db(db.profile.name == user).select().first()
     author = auth.user
     #userprofiles=db().select(db.profile.college)
-    posts = db().select(db.tutorP.ALL)
+    posts = db().select(db.profile.ALL)
     return dict(posts = posts, author = author)
 
 
@@ -105,14 +107,15 @@ def addtutor():
         Field('subject1', label = 'Subject 1', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!"),default ="-please choose a subject-", required = True),
         Field('subject2', label = 'Subject 2 (optional)', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),
         Field('subject3', label = 'Subject 3 (optional)', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),
-        Field('price', requires = IS_FLOAT_IN_RANGE(0, 100.00, error_message='The price should be in the range 0..100')),
+        Field('price', requires = IS_IN_SET(PRICERANGE), default = 'Alternative Exchange' ), #per hour
         Field('body', 'text', label = 'Service Description', requires = IS_NOT_EMPTY("Please enter a description of your services."))
     )
     
     if form.process().accepted:
         tutName = auth.user.first_name+'_'+auth.user.last_name[0]
+        formalName = auth.user.first_name+' '+auth.user.last_name[0]+'.'
         newPage = db.tutorP.insert(name=auth.user.first_name+' '+auth.user.last_name[0]+'.')
-        db.profile.insert(name=tutName, nice_name=newpage, date_created=datetime.utcnow(), body=form.vars.body, 
+        db.profile.insert(name=tutName, nice_name=formalName, date_created=datetime.utcnow(), body=form.vars.body, 
                         subject1=form.vars.subject1, subject2=form.vars.subject2, subject3=form.vars.subject3, price=form.vars.price, picture=auth.user.picture)
         redirect(URL('default', 'index', args=auth.user.first_name+auth.user.last_name[0]))
     
@@ -124,7 +127,7 @@ def addstudent():
     
     form = SQLFORM.factory(
         Field('subject', label = 'Subject', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!"), default ="-please choose a subject-", required = True),
-        Field('price', requires = IS_FLOAT_IN_RANGE(0, 100.00, error_message='The price should be in the range 0..100')),
+        Field('price', requires = IS_IN_SET(PRICERANGE), default = 'Alternative Exchange' ), #per hour
         Field('body', 'text', label = 'Service Description', requires = IS_NOT_EMPTY("Please enter a description of your services."))
     )
     
