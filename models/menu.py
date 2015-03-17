@@ -46,7 +46,7 @@ def _():
         (SPAN('For Tutors', _class='highlighted'), False, URL('default', 'tutorposts'), [
         (T('Find a Pupil'), False, URL('default', 'studentposts')),
         (T('Become a tutor! (Upgrade your Profile)'), False, URL('default', 'profile', args=usersPage)),
-        (T('How to be a Tutor'), False, URL('default', args='TutorHelper.pdf'))]),
+        (T('How to be a Tutor'), False, URL('default', 'tutorhelper'))]),
         (SPAN('For Students', _class='highlighted'), False, URL('default', 'studentposts'), [
         (T('Find a Tutor'), False, URL('default', 'tutorposts')),
         (T('Request a Tutor'), False,  URL('default', 'addstudent'))    

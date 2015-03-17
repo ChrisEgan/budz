@@ -51,7 +51,15 @@ mail.settings.sender = 'you@example.com'
 mail.settings.login = 'username:password'
 
 CATEGORY = ['Math', 'History', 'Writing', '-please choose a subject-']
-MAJOR = ['Math', 'History', 'Writing', '-please choose a major-']
+MAJOR = ['Anthropology', 'Applied Physics','Art','Biochemistry and Molecular Biology','Bioengineering','Bioinformatics','Biology',
+         'Business Management Economics','Chemistry','Classical Studies','Cognitive Science','Community Studies','Computer Engineering',
+         'Computer Science','Computer Science: Computer Game Design','Critical Race and Ethnic Studies','Earth Sciences','Ecology and Evolution',
+         'Economics','Education and Teaching','Electrical Engineering','Environmental Studies','Feminist Studies','Field and Exchange Programs'
+         ,'Film & Digital Media','German Studies','Global Economics','History','History of Art and Visual Culture','Human Biology',
+         'Italian Studies','Jewish Studies','Language Studies','Latin American and Latino Studies','Legal Studies','Linguistics','Literature'
+         ,'Marine Biology','Mathematics','Molecular, Cell, and Developmental Biology','Music','Network and Digital Technology',
+         'Neuroscience Physics','Physics (Astrophysics)','Physics Education','Plant Sciences','Politics','Prelaw','Premedicine','Psychology',
+         'Robotics Engineering','Sociology','Spanish Studies','Technology and Information Management','The Philosophy Major','Theater Arts','Writing' ]
 COLLEGES = ['College Eight', 'College Nine', 'College Ten', 'Cowell College', 
             'Crown College', 'Kresge College', 'Merrill College', 'Oakes College', 'Porter College', 'Stevenson College', 'Unaffiliated']
 GENDERS = ['Male', 'Female', 'Other']
@@ -60,19 +68,18 @@ YEAR = ['Freshman', 'Sophomores', 'Junior', 'Senior', 'Grad-Student', 'Alumni']
 
 auth.settings.extra_fields['auth_user']=[
     Field('picture', 'upload'),
-    Field('name', 'string', readable = False),
-    Field('nice_name', 'string', readable = False),
+    Field('name', 'string', writable = False, readable = False),
+    Field('nice_name', 'string', writable = False, readable = False),
     Field('date_created', 'datetime'),
     Field('bio', 'text', default=''),
-    Field('bio2', 'text', default=''),
     Field('gender',requires = IS_IN_SET(GENDERS), default = 'Other'),
     Field('college', requires = IS_IN_SET(COLLEGES), default = 'Unaffiliated'),
     Field('student_status', requires = IS_IN_SET(YEAR, zero = '~Your level of education~'), required = True),
     Field('on_campus', 'boolean'),
-    Field('major', label = 'Major 1', requires = IS_IN_SET(CATEGORY, error_message="choose a major!", zero = "-please choose a Major-"), required = True),
+    Field('major', label = 'Major 1', requires = IS_IN_SET(CATEGORY, error_message="choose a major!"), default = "-please choose a Major-", required = True),
     Field('subject1', label = 'Subject 1', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!", zero = "-please choose a subject-"), required = True),
-    Field('subject2', label = 'Subject 2 (optional)', requires = IS_IN_SET(CATEGORY, zero="-please choose a subject-"), required = False),
-    Field('subject3', label = 'Subject 3 (optional)', requires = IS_IN_SET(CATEGORY, zero = "-please choose a subject-"), required = False),
+    Field('subject2', label = 'Subject 2 (optional)', requires = IS_IN_SET(CATEGORY), default="-please choose a subject-", required = False),
+    Field('subject3', label = 'Subject 3 (optional)', requires = IS_IN_SET(CATEGORY), default = "-please choose a subject-", required = False),
 
     Field('price', requires = IS_IN_SET(PRICERANGE), default = 'Alternative Exchange' ), #per hour
     Field('rating', writable = False),

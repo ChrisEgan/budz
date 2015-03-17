@@ -15,20 +15,30 @@
 @auth.requires_login()
 def profile():
     author = auth.user
-    userprofiles = db().select(db.profile.ALL)
+    userprofiles = db().select(db.auth_user.ALL)
     return dict(userprofiles=userprofiles, author=author)
 
+def tutorhelper():
+    return dict()
 
 def profiles():
     user = request.args(0)
-    theProfile = db(db.profile.name == user).select().first()
+    theProfile = db(db.auth_user.name == user).select().first()
     author = auth.user
     userprofiles = db().select(db.auth_user.ALL)
     form = SQLFORM.factory(
-        Field('returnEmail', 'string', label='Your return email', requires=[IS_EMAIL(error_message='invalid email!'), IS_NOT_EMPTY()]),                   
+        Field('returnEmail', 'string', label='Your return email', requires=[IS_EMAIL(error_message='invalid email!'), IS_NOT_EMPTY()]),  
+        Field('subject', label='Subjust of Email', requires=IS_NOT_EMPTY("Please introduce yourself.")),       
         Field('body', 'text', label='Request for Tutoring', requires=IS_NOT_EMPTY("Please introduce yourself.")))
     
-    return dict(user=theProfile, userprofiles=userprofiles, author=author)
+    if form.process().accepted:
+        tutName = auth.user.first_name + '_' + auth.user.last_name[0]
+        fancyName = auth.user.first_name + ' ' + auth.user.last_name[0] + '.'
+        userProf = db(db.auth_user.id == auth.user.id).select(orderby=db.auth_user.id).first()
+        userProf.mail(recipient = theProfile.email, sub=form.vars.subject, sender=auth_user.email, mess=form.vars.body)
+        redirect(URL('default', 'index', args=auth.user.first_name + auth.user.last_name[0]))
+    
+    return dict(user=theProfile, userprofiles=userprofiles, author=author, form=form)
 
 
 def tutorposts():
