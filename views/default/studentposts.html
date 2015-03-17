@@ -1,6 +1,40 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
-
+<style type="text/css">
+.well{
+    float: left;
+    padding-left: 25px;
+    width: 900px;
+}
+ul{
+   list-style-type: none;
+}
+.price{
+    color: red;
+}
+.addbut{
+margin-left: 30px; 
+}
+.welcome{
+	font-family: !important;
+}
+.college{
+    padding-top:5px;
+}
+.subject{
+    padding-top:25px;
+}
+.profilepic{
+width: 200px;
+}
+.profilecontent{
+width: 350px;
+} 
+.posts{
+ background-color: black;
+    
+}
+</style>
 <h2>Welcome to BrainyApe</h2>
 
 <h4>List of Students:</h4>
@@ -21,7 +55,7 @@
         <h2>{{=p.nice_name}}</h2>
         <h4>{{=p.college}}</h4>
         <table><tr><td>
-            Areas of expertise:</td><td>{{=p.subject1}}, {{=p.subject2}}, {{=p.subject3}}
+            Areas of expertise:</td><td>{{=p.subject}}
         </td></tr></table>
          <table><tr><td>
             {{=p.student_status}},</td><td>{{=p.major}}
@@ -30,7 +64,7 @@
      </td>
      <td>
      <div class="add">
-         <div class='price'><h5>${{=p.price}}/hour</h5></div>
+         
         <p>{{=p.body}}</p>
        {{=A('View Profile', _class='btn', _href=URL('default', 'profiles', args= p.name))}}
      </div>

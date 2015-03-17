@@ -41,9 +41,15 @@ response.generic_patterns = ['*'] if request.is_local else []
 ## (more options discussed in gluon/tools.py)
 #########################################################################
 
-from gluon.tools import Auth, Service, PluginManager
+from gluon.tools import Auth, Crud, Mail, os, Service, PluginManager
 
 auth = Auth(db)
+crud = Crud(db)
+mail = auth.settings.mailer
+mail.settings.server = 'smtp.example.com:25'
+mail.settings.sender = 'you@example.com'
+mail.settings.login = 'username:password'
+
 CATEGORY = ['Math', 'History', 'Writing', '-please choose a subject-']
 MAJOR = ['Math', 'History', 'Writing', '-please choose a major-']
 COLLEGES = ['College Eight', 'College Nine', 'College Ten', 'Cowell College', 
@@ -53,13 +59,16 @@ PRICERANGE = ['Alternative Exchange',1,2,3,4,5,6,7,8,9,10,15,20,25,30,35,40,45,5
 YEAR = ['Freshman', 'Sophomores', 'Junior', 'Senior', 'Grad-Student', 'Alumni']
 
 auth.settings.extra_fields['auth_user']=[
+    Field('picture', 'upload'),
+    Field('name', 'string', readable = False),
+    Field('nice_name', 'string', readable = False),
     Field('date_created', 'datetime'),
     Field('bio', 'text', default=''),
     Field('bio2', 'text', default=''),
     Field('gender',requires = IS_IN_SET(GENDERS), default = 'Other'),
     Field('college', requires = IS_IN_SET(COLLEGES), default = 'Unaffiliated'),
     Field('student_status', requires = IS_IN_SET(YEAR, zero = '~Your level of education~'), required = True),
-    Field('picture', 'upload'),
+    Field('on_campus', 'boolean'),
     Field('major', label = 'Major 1', requires = IS_IN_SET(CATEGORY, error_message="choose a major!", zero = "-please choose a Major-"), required = True),
     Field('subject1', label = 'Subject 1', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!", zero = "-please choose a subject-"), required = True),
     Field('subject2', label = 'Subject 2 (optional)', requires = IS_IN_SET(CATEGORY, zero="-please choose a subject-"), required = False),
@@ -67,7 +76,7 @@ auth.settings.extra_fields['auth_user']=[
 
     Field('price', requires = IS_IN_SET(PRICERANGE), default = 'Alternative Exchange' ), #per hour
     Field('rating', writable = False),
-    Field('tutorpost','boolean', writable = False, default = False),
+    Field('tutorpost','boolean', writable = True, default = False),
     Field('studentpost','boolean', writable = False, default = False)]
 
 service = Service()

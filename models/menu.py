@@ -38,34 +38,22 @@ def _():
     ctr = request.controller
     if auth.user:
         usersPage = auth.user.first_name+'_'+auth.user.last_name[0]
-    #else:
-        #usersPage = none
+    else:
+        usersPage = ''
 
     # useful links to internal and external resources
-        response.menu += [
-            (SPAN('Tutors', _class='highlighted'), False, URL('default', 'tutorposts'), [
-            (T('View Listing of Students'), False, URL('default', 'studentposts')),
-            (T('Add Post to Tutor List'), False, URL('default', 'addtutor')),
-            (T('Tutor Training'), False, URL('default', args='TutorHelper.pdf'))]),
-            (SPAN('Students', _class='highlighted'), False, URL('default', 'studentposts'), [
-            (T('View Listing of Tutors'), False, URL('default', 'tutorposts')),
-            (T('Add Post to Student List'), False,  URL('default', 'addstudent'))    
-            ]),
+    response.menu += [
+        (SPAN('For Tutors', _class='highlighted'), False, URL('default', 'tutorposts'), [
+        (T('Find a Pupil'), False, URL('default', 'studentposts')),
+        (T('Become a tutor! (Upgrade your Profile)'), False, URL('default', 'profile', args=usersPage)),
+        (T('How to be a Tutor'), False, URL('default', args='TutorHelper.pdf'))]),
+        (SPAN('For Students', _class='highlighted'), False, URL('default', 'studentposts'), [
+        (T('Find a Tutor'), False, URL('default', 'tutorposts')),
+        (T('Request a Tutor'), False,  URL('default', 'addstudent'))    
+        ]),
 
-            (SPAN('Profile', _class='highlighted'), False, URL('default', 'profile', args=usersPage))]
-    else:   
-        # useful links to internal and external resources
-        response.menu += [
-            (SPAN('Tutors', _class='highlighted'), False, URL('default', 'tutorposts'), [
-            (T('View Listing of Students'), False, URL('default', 'studentposts')),
-            (T('Add Post to Tutor List'), False, URL('default', 'addtutor')),
-            (T('Tutor Training'), False, URL('default', args='TutorHelper.pdf'))]),
-            (SPAN('Students', _class='highlighted'), False, URL('default', 'studentposts'), [
-            (T('View Listing of Tutors'), False, URL('default', 'tutorposts')),
-            (T('Add Post to Student List'), False,  URL('default', 'addstudent'))
-            ]),
-
-            (SPAN('Profile', _class='highlighted'), False, URL('default', 'index'))]
+        (SPAN('Profile', _class='highlighted'), False, URL('default', 'profile', args=usersPage))]
+    
    
     
 if DEVELOPMENT_MENU: _()

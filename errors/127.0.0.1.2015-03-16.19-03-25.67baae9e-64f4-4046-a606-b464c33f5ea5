@@ -1,0 +1,333 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.AttributeError'> 'Row' object has no attribute 'tutor'"
+p3
+sS'layer'
+p4
+S'C:\\Users\\Chris\\Documents\\web2py\\applications\\budz\\controllers/default.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\n# this file is released under public domain and you can use without limitations\n\n#########################################################################\n## This is a sample controller\n## - index is the default action of any application\n## - user is required for authentication and authorization\n## - download is for downloading files uploaded in the db (does streaming)\n## - api is an example of Hypermedia API support and access control\n#########################################################################\n\ndef get_username():\n    name = \'Nobody\'\n    if auth.user:\n        name = auth.user.first_name+\'_\'+auth.user.last_name[0]\n    return name\n\ndef index():\n    \n    posts = db().select(db.tutorP.ALL)\n    return dict(posts = posts)\n\ndef index3():\n    \n    posts = db().select(db.tutorP.ALL)\n    return dict(posts = posts)\n\n\ndef index2():\n    """\n    example action using the internationalization operator T and flash\n    rendered by views/default/index.html or views/generic.html\n\n    if you need a simple wiki simply replace the two lines below with:\n    return auth.wiki()\n    """\n    posts = db().select(db.tutorP.ALL)\n    return dict(posts = posts)\n\ndef profile():\n    author = auth.user\n    userprofiles=db().select(db.profile.ALL)\n    return dict(userprofiles=userprofiles, author = author)\n\ndef profiles():\n    user = request.args(0)\n    theProfile = db(db.profile.name == user).select().first()\n    author = auth.user\n    userprofiles=db().select(db.profile.ALL)\n    return dict(user = theProfile, userprofiles=userprofiles, author = author)\n\ndef profiles2():\n    user = request.args(0)\n    theProfile = db(db.profile.name == user).select().first()\n    author = auth.user\n    userprofiles=db().select(db.profile.ALL)\n    return dict(user = theProfile, userprofiles=userprofiles, author = author)\n\ndef editprofile():\n    \n    userprofiles = SQLFORM(db.profile)\n    if userprofiles.process().accepted:\n        # Successful processing.\n        session.flash = T("Thanks for editing your Profile")\n        newPage = auth.user.first_name+\'_\'+auth.user.last_name[0]\n        userName = name=auth.user.first_name+\' \'+auth.user.last_name[0]+\'.\'\n        db.profile.insert(name=userName)\n        redirect(URL(\'default\', \'profile\', args=newPage ))\n    return dict(userprofiles = userprofiles)\n\n\n\ndef editprofile2():\n\n        \n    title = request.args(0) or \'\'\n    \n    userprofiles = SQLFORM.factory(\n        Field(\'subject1\', label = \'Subject 1\', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!"),default ="-please choose a subject-", required = True),\n        Field(\'subject2\', label = \'Subject 2 (optional)\', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),\n        Field(\'subject3\', label = \'Subject 3 (optional)\', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),\n        Field(\'price\', requires = IS_FLOAT_IN_RANGE(0, 100.00, error_message=\'The price should be in the range 0..100\')),\n        Field(\'bio\', \'text\', label = \'Service Description\', requires = IS_NOT_EMPTY("Please enter a description of your services.")),\n        Field(\'bio2\', \'text\', label = \'Service Description\', requires = IS_NOT_EMPTY("Please enter a description of your services.")),\n        Field(\'picture\', label = \'Profile Picture\')\n    )\n    \n    if userprofiles.process().accepted:\n        newPage = auth.user.first_name+\'_\'+auth.user.last_name[0]\n        userName = name=auth.user.first_name+\' \'+auth.user.last_name[0]+\'.\'\n        db.profile.insert(name=userName, date_created=datetime.utcnow(), bio=userprofiles.vars.bio,\n                        subject1=userprofiles.vars.subject1, subject2=userprofiles.vars.subject2, subject3=userprofiles.vars.subject3, price=userprofiles.vars.price, picture=userprofiles.vars.picture)\n        redirect(URL(\'default\', \'profile\', args=newPage))\n\n    return dict(userprofiles = userprofiles)\n\ndef tutorposts():\n    author = auth.user\n    #userprofiles=db().select(db.profile.college)\n    posts = db().select(db.profile.ALL)\n    return dict(posts = posts, author = author)\n\ndef tutorposts2():\n\n    author = auth.user\n    #userprofiles=db().select(db.profile.college)\n    posts = db().select(db.tutorP.ALL)\n    return dict(posts = posts, author = author)\n\n\ndef studentposts():\n    #userprofiles=db().select(db.profile.image)\n    posts = db().select(db.studentP.ALL)\n    return dict(posts = posts)#,userprofile = userprofile)\n\n\ndef addtutor():   \n    title = request.args(0) or \'\'\n    \n    form = SQLFORM.factory(\n        Field(\'subject1\', label = \'Subject 1\', requires = IS_IN_SET(CATEGORY, zero="-please choose a subject-", error_message="choose a subject!"), required = True),\n        Field(\'subject2\', label = \'Subject 2 (optional)\', requires = IS_IN_SET(CATEGORY, zero="-please choose a subject-"), required = False),\n        Field(\'subject3\', label = \'Subject 3 (optional)\', requires = IS_IN_SET(CATEGORY, zero="-please choose a subject-"), required = False),\n        Field(\'major\', label = \'Major\', requires = IS_IN_SET(CATEGORY, zero="-please choose a Major-"), required = False),\n        Field(\'major\', label = \'Major\', requires = IS_IN_SET(CATEGORY, zero="-please choose a Major-"), required = False),\n        Field(\'student_status\', label = \'Year\', requires = IS_IN_SET(YEAR, zero = \'~Your level of education~\'), required = True),\n        Field(\'college\', label = \'College\', requires = IS_IN_SET(COLLEGES, zero="-please choose a college-"), required = False),\n        Field(\'price\', requires = IS_IN_SET(PRICERANGE), default = \'Alternative Exchange\'),\n        Field(\'body\', \'text\', label = \'Service Description\', requires = IS_NOT_EMPTY("Please enter a description of your services."))\n    )\n    \n    if form.process().accepted:\n        tutName = auth.user.first_name+\'_\'+auth.user.last_name[0]\n        fancyName = auth.user.first_name+\' \'+auth.user.last_name[0]+\'.\'\n        if auth.user.tutor==True:\n            redirect(URL(\'default\', \'index\'))\n        userProf = db(db.auth_user.id == auth.user.id).select(orderby=db.auth_user.id).first()\n        userProf.update_record(tutorpost = True)\n        db.profile.insert(name=tutName, nice_name=fancyName, date_created=datetime.utcnow(), body=form.vars.body,     \n                          major=form.vars.major,college=form.vars.college,student_status=form.vars.student_status,\n                          subject1=form.vars.subject1, subject2=form.vars.subject2, subject3=form.vars.subject3, \n                          price=form.vars.price, picture=auth.user.picture )\n        redirect(URL(\'default\', \'index\', args=auth.user.first_name+auth.user.last_name[0]))\n    \n    return dict(form = form)\n\ndef addtutor2():   \n    # if auth.user.tutor==True:\n     #   redirect(URL(\'default\', \'profile\', args=newPage))\n      #  auth.user.tutor=True\n    title = request.args(0) or \'\'\n    form = SQLFORM.factory(\n        Field(\'subject1\', label = \'Subject 1\', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!"),default ="-please choose a subject-", required = True),\n        Field(\'subject2\', label = \'Subject 2 (optional)\', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),\n        Field(\'subject3\', label = \'Subject 3 (optional)\', requires = IS_IN_SET(CATEGORY), default ="-please choose a subject-", required = False),\n        Field(\'price\', requires =  IS_IN_SET(PRICERANGE)),\n        Field(\'body\', \'text\', label = \'Service Description\', requires = IS_NOT_EMPTY("Please enter a description of your services.")))\n    \n    if form.process().accepted:\n        tutName = auth.user.first_name+\'_\'+auth.user.last_name[0]\n        newPage = db.tutorP.insert(name=auth.user.first_name+\' \'+auth.user.last_name[0]+\'.\')\n        db.profile.insert(name=tutName, nice_name=newPage, date_created=datetime.utcnow(), body=form.vars.body,\n                        subject1=form.vars.subject1, subject2=form.vars.subject2, subject3=form.vars.subject3, price=form.vars.price, picture=auth.user.picture)\n        redirect(URL(\'default\', \'index\', args=auth.user.first_name+auth.user.last_name[0]))\n    \n    return dict(form = form)\n\n\ndef addstudent():   \n     title = request.args(0) or \'\'\n    \n     form = SQLFORM.factory(\n        Field(\'subject1\', label = \'Subject 1\', requires = IS_IN_SET(CATEGORY, zero="-please choose a subject-", error_message="choose a subject!"), required = True),\n        Field(\'major\', label = \'Major\', requires = IS_IN_SET(CATEGORY, zero="-please choose a Major-"), required = False),\n        Field(\'student_status\', label = \'Year\', requires = IS_IN_SET(YEAR, zero = \'~Your level of education~\'), required = True),\n        Field(\'college\', label = \'College\', requires = IS_IN_SET(COLLEGES, zero="-please choose a college-"), required = False),\n        Field(\'price\', requires = IS_IN_SET(PRICERANGE), default = \'Alternative Exchange\'),\n        Field(\'body\', \'text\', label = \'Service Description\', requires = IS_NOT_EMPTY("Please enter a description of your services.")))\n    \n     if form.process().accepted:\n        tutName = auth.user.first_name+\'_\'+auth.user.last_name[0]\n        fancyName = auth.user.first_name+\' \'+auth.user.last_name[0]+\'.\'\n        db.studentP.insert(name=tutName, nice_name=fancyName, date_created=datetime.utcnow(), body=form.vars.body,     \n                           major=form.vars.major,college=form.vars.college,student_status=form.vars.student_status,\n                           subject=form.vars.subject, price_min=form.vars.price_min, price_max=form.vars.price_max, picture=auth.user.picture)\n        redirect(URL(\'default\', \'index\', args=auth.user.first_name+auth.user.last_name[0]))\n    \n     return dict(form = form)\n\n\n    \n    \n    \n    \n\ndef user():\n    """\n    exposes:\n    http://..../[app]/default/user/login\n    http://..../[app]/default/user/logout\n    http://..../[app]/default/user/register\n    http://..../[app]/default/user/profile\n    http://..../[app]/default/user/retrieve_password\n    http://..../[app]/default/user/change_password\n    http://..../[app]/default/user/manage_users (requires membership in\n    use @auth.requires_login()\n        @auth.requires_membership(\'group name\')\n        @auth.requires_permission(\'read\',\'table name\',record_id)\n    to decorate functions that need access control\n    """\n    return dict(form=auth())\n\n\n@cache.action()\ndef download():\n    """\n    allows downloading of uploaded files\n    http://..../[app]/default/download/[filename]\n    """\n    return response.download(request, db)\n\n\ndef call():\n    """\n    exposes services. for example:\n    http://..../[app]/default/call/jsonrpc\n    decorate with @services.jsonrpc the functions to expose\n    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv\n    """\n    return service()\n\n\n@auth.requires_login() \ndef api():\n    """\n    this is example of API with access control\n    WEB2PY provides Hypermedia API (Collection+JSON) Experimental\n    """\n    from gluon.contrib.hypermedia import Collection\n    rules = {\n        \'<tablename>\': {\'GET\':{},\'POST\':{},\'PUT\':{},\'DELETE\':{}},\n        }\n    return Collection(db).process(request,response,rules)\n\nresponse._vars=response._caller(addtutor)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__hash__'
+p12
+S"<method-wrapper '__hash__' of exceptions.AttributeError object>"
+p13
+sS'__setattr__'
+p14
+S"<method-wrapper '__setattr__' of exceptions.AttributeError object>"
+p15
+sS'__reduce_ex__'
+p16
+S'<built-in method __reduce_ex__ of exceptions.AttributeError object>'
+p17
+sS'__getslice__'
+p18
+S"<method-wrapper '__getslice__' of exceptions.AttributeError object>"
+p19
+sS'__getitem__'
+p20
+S"<method-wrapper '__getitem__' of exceptions.AttributeError object>"
+p21
+sS'__setstate__'
+p22
+S'<built-in method __setstate__ of exceptions.AttributeError object>'
+p23
+sS'__reduce__'
+p24
+S'<built-in method __reduce__ of exceptions.AttributeError object>'
+p25
+sS'__str__'
+p26
+S"<method-wrapper '__str__' of exceptions.AttributeError object>"
+p27
+sS'__format__'
+p28
+S'<built-in method __format__ of exceptions.AttributeError object>'
+p29
+sS'__getattribute__'
+p30
+S"<method-wrapper '__getattribute__' of exceptions.AttributeError object>"
+p31
+sS'__class__'
+p32
+S"<type 'exceptions.AttributeError'>"
+p33
+sS'__unicode__'
+p34
+S'<built-in method __unicode__ of exceptions.AttributeError object>'
+p35
+sS'__delattr__'
+p36
+S"<method-wrapper '__delattr__' of exceptions.AttributeError object>"
+p37
+sS'__subclasshook__'
+p38
+S'<built-in method __subclasshook__ of type object>'
+p39
+sS'__repr__'
+p40
+S"<method-wrapper '__repr__' of exceptions.AttributeError object>"
+p41
+sS'args'
+p42
+S'("\'Row\' object has no attribute \'tutor\'",)'
+p43
+sS'__dict__'
+p44
+S'{}'
+p45
+sS'__sizeof__'
+p46
+S'<built-in method __sizeof__ of exceptions.AttributeError object>'
+p47
+sS'__doc__'
+p48
+S"'Attribute not found.'"
+p49
+sS'__init__'
+p50
+S"<method-wrapper '__init__' of exceptions.AttributeError object>"
+p51
+sS'__new__'
+p52
+S'<built-in method __new__ of type object>'
+p53
+ssS'evalue'
+p54
+S"'Row' object has no attribute 'tutor'"
+p55
+sS'request'
+p56
+cgluon.html
+XML_unpickle
+p57
+(S's`v\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>budz</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>default</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-5c27e871-16e7-457b-adc4-122eea296f32<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_bbbbboard</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-39df9f02-23e3-464f-89c6-8c8e84bf157d<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_budz</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-2199f235-3833-4f8c-84f7-c772e4269038<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_crowdgrader1</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-42c35818-8802-414c-b48a-43f5ec61000b<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_scrap</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-24411d48-ed23-4709-91e2-bbcd5a2a8fdf<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_welcome</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-95da9178-4439-4429-8944-803a2e34f55a<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">CONTENT_LENGTH</td><td style="vertical-align:top;">:</td><td><div>1106</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">CONTENT_TYPE</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryXbnjgKWA1T5aTJq2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CACHE_CONTROL</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONTENT_LENGTH</td><td style="vertical-align:top;">:</td><td><div>1106</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONTENT_TYPE</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryXbnjgKWA1T5aTJq2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_crowdgrader1=127.0.0.1-42c35818-8802-414c-b48a-43f5ec61000b; session_id_bbbbboard=127.0.0.1-39df9f02-23e3-464f-89c6-8c8e84bf157d; session_id_welcome=127.0.0.1-95da9178-4439-4429-8944-803a2e34f55a; session_id_scrap=127.0.0.1-24411d48-ed23-4709-91e2-bbcd5a2a8fdf; session_id_admin=127.0.0.1-5c27e871-16e7-457b-adc4-122eea296f32; session_id_budz=127.0.0.1-2199f235-3833-4f8c-84f7-c772e4269038</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ORIGIN</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_REFERER</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/budz/default/addtutor</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/budz/default/addtutor</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>56589</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>POST</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>TheBigBlack</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py\\\\applications\\\\welcome\\\\&#x27;, &#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py\\\\applications\\\\scrap\\\\&#x27;, &#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py\\\\applications\\\\budz\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Chris\\Documents\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x2f4cb20: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;TheBigBlack&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">content_length</td><td style="vertical-align:top;">:</td><td><div>1106</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">content_type</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryXbnjgKWA1T5aTJq2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Chris\\Documents\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cache_control</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_content_length</td><td style="vertical-align:top;">:</td><td><div>1106</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_content_type</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryXbnjgKWA1T5aTJq2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_crowdgrader1=127.0.0.1-42c35818-8802-414c-b48a-43f5ec61000b; session_id_bbbbboard=127.0.0.1-39df9f02-23e3-464f-89c6-8c8e84bf157d; session_id_welcome=127.0.0.1-95da9178-4439-4429-8944-803a2e34f55a; session_id_scrap=127.0.0.1-24411d48-ed23-4709-91e2-bbcd5a2a8fdf; session_id_admin=127.0.0.1-5c27e871-16e7-457b-adc4-122eea296f32; session_id_budz=127.0.0.1-2199f235-3833-4f8c-84f7-c772e4269038</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_origin</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_referer</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/budz/default/addtutor</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>2001:0:9d38:6ab8:30b0:397d:5616:161</div></td></tr><tr><td><div>fe80::30b0:397d:5616:161%9</div></td></tr><tr><td><div>TheBigBlack</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>fe80::b894:a814:784e:dc72%3</div></td></tr><tr><td><div>fe80::200:5efe:169.233.254.158%10</div></td></tr><tr><td><div>TheBigBlack.ucsc.edu</div></td></tr><tr><td><div>2002:a9e9:fe9e::a9e9:fe9e</div></td></tr><tr><td><div>169.233.254.158</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/budz/default/addtutor</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>56589</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>POST</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/budz/default/addtutor</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>TheBigBlack</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Chris\\Documents\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.12-stable+timestamp.2015.01.17.06.11.03</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x005E60D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x02F940A0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x075D8D70&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x005E60D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x02F940A0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x075D8D70&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Chris\\Documents\\web2py\\applications\\budz\\</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>addtutor</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py\\\\applications\\\\welcome\\\\&#x27;, &#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py\\\\applications\\\\scrap\\\\&#x27;, &#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py\\\\applications\\\\budz\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Chris\\Documents\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x2f4cb20: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;TheBigBlack&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Chris\\Documents\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>2001:0:9d38:6ab8:30b0:397d:5616:161</div></td></tr><tr><td><div>fe80::30b0:397d:5616:161%9</div></td></tr><tr><td><div>TheBigBlack</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>fe80::b894:a814:784e:dc72%3</div></td></tr><tr><td><div>fe80::200:5efe:169.233.254.158%10</div></td></tr><tr><td><div>TheBigBlack.ucsc.edu</div></td></tr><tr><td><div>2002:a9e9:fe9e::a9e9:fe9e</div></td></tr><tr><td><div>169.233.254.158</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.12-stable+timestamp.2015.01.17.06.11.03</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_sheduler</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2015, 3, 16, 19, 3, 25, 884000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/budz/default/addtutor</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2015, 3, 17, 2, 3, 25, 884000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">uuid</td><td style="vertical-align:top;">:</td><td><div>budz/127.0.0.1.2015-03-16.19-03-25.67baae9e-64f4-4046-a606-b464c33f5ea5</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x0777F8D0&gt;</div></td></tr></table></div>'
+tRp58
+sS'frames'
+p59
+(lp60
+(dp61
+S'file'
+p62
+S'C:\\Users\\Chris\\Documents\\web2py\\gluon\\restricted.py'
+p63
+sS'dump'
+p64
+(dp65
+sS'lnum'
+p66
+I224
+sS'lines'
+p67
+(dp68
+sS'call'
+p69
+S"(code='# -*- coding: utf-8 -*-\\n# this file is released ...ules)\\n\\nresponse._vars=response._caller(addtutor)\\n', environment={'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'CAT': <class 'gluon.html.CAT'>, ...}, layer=r'C:\\Users\\Chris\\Documents\\web2py\\applications\\budz\\controllers/default.py')"
+p70
+sS'func'
+p71
+S'restricted'
+p72
+sa(dp73
+g62
+S'C:\\Users\\Chris\\Documents\\web2py\\applications\\budz\\controllers\\default.py'
+p74
+sg64
+(dp75
+sg66
+I245
+sg67
+(dp76
+I234
+S'def api():'
+p77
+sI235
+S'    """'
+p78
+sI236
+S'    this is example of API with access control'
+p79
+sI237
+S'    WEB2PY provides Hypermedia API (Collection+JSON) Experimental'
+p80
+sI238
+S'    """'
+p81
+sI239
+S'    from gluon.contrib.hypermedia import Collection'
+p82
+sI240
+S'    rules = {'
+p83
+sI241
+S"        '<tablename>': {'GET':{},'POST':{},'PUT':{},'DELETE':{}},"
+p84
+sI242
+S'        }'
+p85
+sI243
+S'    return Collection(db).process(request,response,rules)'
+p86
+ssg69
+S'()'
+p87
+sg71
+S'<module>'
+p88
+sa(dp89
+g62
+S'C:\\Users\\Chris\\Documents\\web2py\\gluon\\globals.py'
+p90
+sg64
+(dp91
+sg66
+I393
+sg67
+(dp92
+sg69
+S'(f=<function addtutor>)'
+p93
+sg71
+S'<lambda>'
+p94
+sa(dp95
+g62
+S'C:\\Users\\Chris\\Documents\\web2py\\applications\\budz\\controllers\\default.py'
+p96
+sg64
+(dp97
+S'auth.user'
+p98
+S"<Row {'rating': 'h', 'major': None, 'last_name':... 'h', 'date_created': None, 'studentpost': None}>"
+p99
+sS'auth.user.first_name'
+p100
+S"'Christopher'"
+p101
+sS'auth.user.last_name'
+p102
+S"'Egan'"
+p103
+sS'global auth'
+p104
+S'<gluon.tools.Auth object>'
+p105
+sS'fancyName'
+p106
+S"'Christopher E.'"
+p107
+ssg66
+I135
+sg67
+(dp108
+I130
+S'    )'
+p109
+sI131
+S''
+sI132
+S'    if form.process().accepted:'
+p110
+sI133
+S"        tutName = auth.user.first_name+'_'+auth.user.last_name[0]"
+p111
+sI134
+S"        fancyName = auth.user.first_name+' '+auth.user.last_name[0]+'.'"
+p112
+sI135
+S'        if auth.user.tutor==True:'
+p113
+sI136
+S"            redirect(URL('default', 'index'))"
+p114
+sI137
+S'        userProf = db(db.auth_user.id == auth.user.id).select(orderby=db.auth_user.id).first()'
+p115
+sI138
+S'        userProf.update_record(tutorpost = True)'
+p116
+sI139
+S'        db.profile.insert(name=tutName, nice_name=fancyName, date_created=datetime.utcnow(), body=form.vars.body,'
+p117
+ssg69
+S'()'
+p118
+sg71
+S'addtutor'
+p119
+sa(dp120
+g62
+S'C:\\Users\\Chris\\Documents\\web2py\\gluon\\dal\\objects.py'
+p121
+sg64
+(dp122
+sg66
+I81
+sg67
+(dp123
+sg69
+S"(self=<Row {'rating': 'h', 'major': None, 'last_name':... 'h', 'date_created': None, 'studentpost': None}>, k='tutor')"
+p124
+sg71
+g20
+sasS'pyver'
+p125
+S'Python 2.7.6: C:\\Users\\Chris\\Documents\\web2py\\web2py.exe (prefix: C:\\Users\\Chris\\Anaconda)'
+p126
+sS'session'
+p127
+g57
+(S's\xe4\x14\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">auth</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">expiration</td><td style="vertical-align:top;">:</td><td><div>3600</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">hmac_key</td><td style="vertical-align:top;">:</td><td><div>675a7e9b-4f72-4214-8d7e-99dc01715110</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_visit</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2015, 3, 16, 19, 3, 22, 227000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remember_me</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">user</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">bio</td><td style="vertical-align:top;">:</td><td><div>I have experience with most of the Cabrillo College teachers and their methods, test styles, and other advantages I can pass on to students. I&#x27;ve successfully tutored four students through a Chem 1B course. I&#x27;m currently attending UCSC and have done well almost every biology and chemistry course given at Cabrillo College. I plan on attending medical school, so I have taken the anatomy and physiology courses offered at Cabrillo for the allied health programs. I&#x27;ve been a teaching assistant in the anatomy lab as well, where I discovered that I love teaching and helping students succeed in their academic goals. I have been a successful tutor through WyzAnt for one year now.</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">bio2</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">college</td><td style="vertical-align:top;">:</td><td><div>c8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">date_created</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">email</td><td style="vertical-align:top;">:</td><td><div>cjegan@ucsc.edu</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">first_name</td><td style="vertical-align:top;">:</td><td><div>Christopher</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gender</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">id</td><td style="vertical-align:top;">:</td><td><div>1L</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_name</td><td style="vertical-align:top;">:</td><td><div>Egan</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">major</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">picture</td><td style="vertical-align:top;">:</td><td><div>auth_user.picture.962aa6c765a1e9ca.69636f6e2d796f67612e6a7067.jpg</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">price</td><td style="vertical-align:top;">:</td><td><div>5</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">rating</td><td style="vertical-align:top;">:</td><td><div>h</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">registration_id</td><td style="vertical-align:top;">:</td><td><div>https://www.google.com/profiles/116864008576033700263</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">registration_key</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">reset_password_key</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">student_status</td><td style="vertical-align:top;">:</td><td><div>freshman</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">studentpost</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">subject1</td><td style="vertical-align:top;">:</td><td><div>h</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">subject2</td><td style="vertical-align:top;">:</td><td><div>h</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">subject3</td><td style="vertical-align:top;">:</td><td><div>h</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">tutorpost</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">user_groups</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">1</td><td style="vertical-align:top;">:</td><td><div>user_1</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_orderby</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_query</td><td style="vertical-align:top;">:</td><td><div>db.studentP.id&gt;0</div></td></tr></table></div>'
+tRp128
+sS'etype'
+p129
+S"<type 'exceptions.AttributeError'>"
+p130
+sS'date'
+p131
+S'Mon Mar 16 19:03:26 2015'
+p132
+sS'response'
+p133
+g57
+(S'sP#\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x07D46740&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_budz</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-2199f235-3833-4f8c-84f7-c772e4269038<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div>Success!</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div>: </div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>table3cols</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>*</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">google_analytics_id</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">logo</td><td style="vertical-align:top;">:</td><td><div><a class="brand" href="/budz/default/index"><b>BrainyApe</b>&trade;&nbsp;</a></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div><table><tr><td><div>Home</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/budz/default/index</div></td></tr><tr><td><div><table></table></div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div><span class="highlighted">Tutors</span></div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/budz/default/tutorposts</div></td></tr><tr><td><div><table><tr><td><div><table><tr><td><div>View Listing of Students</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/budz/default/studentposts</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Add Post to Tutor List</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/budz/default/addtutor</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Tutor Training</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/budz/default/default/TutorHelper.pdf</div></td></tr></table></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div><span class="highlighted">Students</span></div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/budz/default/studentposts</div></td></tr><tr><td><div><table><tr><td><div><table><tr><td><div>View Listing of Tutors</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/budz/default/tutorposts</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Add Post to Student List</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/budz/default/addstudent</div></td></tr></table></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div><span class="highlighted">Profile</span></div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/budz/default/profile/Christopher_E</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">author</td><td style="vertical-align:top;">:</td><td><div>Your Name &lt;you@example.com&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generator</td><td style="vertical-align:top;">:</td><td><div>Web2py Web Framework</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">keywords</td><td style="vertical-align:top;">:</td><td><div>web2py, python, framework</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^default/\\w+\\.py$</div></td></tr><tr><td><div>^default/addtutor/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_budz</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;C:\\\\Users\\\\Chris\\\\Documents\\\\web2py\\\\applications\\\\budz\\\\sessions\\\\14d\\\\16a\\\\127.0.0.1-2199f235-3833-4f8c-84f7-c772e4269038&#x27;, mode &#x27;rb+&#x27; at 0x071FBF98&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Chris\\Documents\\web2py\\applications\\budz\\sessions\\127.0.0.1-2199f235-3833-4f8c-84f7-c772e4269038</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>3bd4ae57eeaa1ec3d5d6409177627491</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-2199f235-3833-4f8c-84f7-c772e4269038</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_budz</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>budz</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">subtitle</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">title</td><td style="vertical-align:top;">:</td><td><div>Budz</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>default/addtutor.html</div></td></tr></table></div>'
+tRp134
+sS'locals'
+p135
+(dp136
+S'ae'
+p137
+S'AttributeError("\'Row\' object has no attribute \'tutor\'",)'
+p138
+sS'k'
+S"'tutor'"
+p139
+sS'm'
+S'None'
+p140
+sS'_extra'
+p141
+S'None'
+p142
+sS'key'
+p143
+S"'tutor'"
+p144
+sS'self'
+p145
+S"<Row {'rating': 'h', 'major': None, 'last_name':... 'h', 'date_created': None, 'studentpost': None}>"
+p146
+sssS'traceback'
+p147
+S'Traceback (most recent call last):\n  File "gluon/restricted.py", line 224, in restricted\n  File "C:\\Users\\Chris\\Documents\\web2py\\applications\\budz\\controllers/default.py", line 245, in <module>\n  File "gluon/globals.py", line 393, in <lambda>\n  File "C:\\Users\\Chris\\Documents\\web2py\\applications\\budz\\controllers/default.py", line 135, in addtutor\n    if auth.user.tutor==True:\n  File "gluon/dal/objects.py", line 81, in __getitem__\nAttributeError: \'Row\' object has no attribute \'tutor\'\n'
+p148
+s.
