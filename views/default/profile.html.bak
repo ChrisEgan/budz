@@ -60,13 +60,6 @@ p{
              </p>
          </div>
      </td>
-     <td>
-         <div class="bio2">
-             <p>
-             {{=author.bio2}}
-             </p>
-         </div>
-     </td>
 </tr>
 </table>
 
@@ -75,5 +68,10 @@ p{
 {{=A('Add Tutor Post', _class='btn', _href=URL('default', 'addtutor'))}}
     
 {{=A('Add Student Post', _class='btn', _href=URL('default', 'addstudent'))}}
+    </div>
 
+
+<div class='well'>
+    {{=A('Add Tutor Post', _class='btn', _href=URL('default', 'user', args='profile'))}}
+</div>
 </body>

@@ -68,23 +68,22 @@ YEAR = ['Freshman', 'Sophomores', 'Junior', 'Senior', 'Grad-Student', 'Alumni']
 
 auth.settings.extra_fields['auth_user']=[
     Field('picture', 'upload'),
-    Field('name', 'string', writable = False, readable = False),
-    Field('nice_name', 'string', writable = False, readable = False),
+    Field('name', 'string'),
+    Field('nice_name', 'string'),
     Field('date_created', 'datetime'),
     Field('bio', 'text', default=''),
     Field('gender',requires = IS_IN_SET(GENDERS), default = 'Other'),
     Field('college', requires = IS_IN_SET(COLLEGES), default = 'Unaffiliated'),
-    Field('student_status', requires = IS_IN_SET(YEAR, zero = '~Your level of education~'), required = True),
+    Field('student_status', requires = IS_IN_SET(YEAR, zero = '~Your level of education~'), required = False),
     Field('on_campus', 'boolean'),
-    Field('major', label = 'Major 1', requires = IS_IN_SET(CATEGORY, error_message="choose a major!"), default = "-please choose a Major-", required = True),
-    Field('subject1', label = 'Subject 1', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!", zero = "-please choose a subject-"), required = True),
+    Field('major', label = 'Major', requires = IS_IN_SET(MAJOR, error_message="choose a major!"), default = "-please choose a Major-", required = False),
+    Field('subject1', label = 'Subject 1', requires = IS_IN_SET(CATEGORY, error_message="choose a subject!", zero = "-please choose a subject-"), required = False),
     Field('subject2', label = 'Subject 2 (optional)', requires = IS_IN_SET(CATEGORY), default="-please choose a subject-", required = False),
     Field('subject3', label = 'Subject 3 (optional)', requires = IS_IN_SET(CATEGORY), default = "-please choose a subject-", required = False),
 
     Field('price', requires = IS_IN_SET(PRICERANGE), default = 'Alternative Exchange' ), #per hour
     Field('rating', writable = False),
-    Field('tutorpost','boolean', writable = True, default = False),
-    Field('studentpost','boolean', writable = False, default = False)]
+    Field('tutorpost','boolean', writable = True, default = False)]
 
 service = Service()
 plugins = PluginManager()

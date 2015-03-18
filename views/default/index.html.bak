@@ -96,8 +96,8 @@ img{
     border-radius: 50%;
 }
 .student333{
-    height:215px;
-	width:215px;
+    height:205px;
+	width:205px;
     opacity: 0.9;
     background-position: 50%;
     border-radius: 50%;
@@ -115,7 +115,6 @@ img{
 }
 .tutortutee{
     background-color: black;
-
     width: 1300px;
     height: 500px;
     float:left;
@@ -141,15 +140,26 @@ img.student2{
     width: 640px;
     height: 480px;
 }
+.tutor6{
+    text-align:center;
+}
+
+img.monkey2{
+    width: 275px;
+    height: 275px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 50%;
+}
 </style>
 <script type="text/javascript">
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-var imagecount = getRandomInt(1,5);
 
-//var imagecount = 1;
+
+var imagecount = 3;
 var total = 5;
 function slide(x){
 	var Image = document.getElementById('img');
@@ -159,7 +169,7 @@ function slide(x){
 	} else if(imagecount < 1){
 		imagecount = total;
 	}
-	Image.src = "/budz/static/images/img" + imagecount + "1.jpg";
+	Image.src = "/brainyape/static/images/img" + imagecount + "1.jpg";
 }
 window.setInterval(function slideA(){
 	var Image = document.getElementById('img');
@@ -169,8 +179,8 @@ window.setInterval(function slideA(){
 	} else if(imagecount < 1){
 		imagecount = total;
 	}
-	Image.src = "/budz/static/images/img" + imagecount + "1.jpg";
-},6000);
+	Image.src = "/brainyape/static/images/img" + imagecount + ".1jpg";
+},14000);
 </script>
 </head>
 
@@ -178,8 +188,9 @@ window.setInterval(function slideA(){
 <center>
 	<div class="container">
         <center>
+        <img class="monkey2" src="/brainyape/static/images/logoMONK.png" alt="Icon">         
         <div class="greet">
-        <h2>Welcome To BrainyApe.</h2>
+        <h1>Welcome To BrainyApe.</h1>
         <h4>Where it is easy to find a tutor for students and find students for tutors.</h4>
         </div>
         </center>
@@ -189,18 +200,21 @@ window.setInterval(function slideA(){
             <table>
             <tr>
             <td>
-            <div class="left_holder"><img src="/budz/static/images/arrow_left.png"  class="left" onClick="slide(-1)" align="top"/></div>
+            <div class="left_holder"><img src="/brainyape/static/images/arrow_left.png"  class="left" onClick="slide(-1)" align="top"/></div>
              </td>
                 <td>
-                <img src="/budz/static/images/img31.jpg"  id="img" align="middle" onClick="slide(1)" />
+                <img src="/brainyape/static/images/img21.jpg"  id="img" align="middle" onClick="slide(1)" />
             </td>
                 <td>
-                <div class="right_holder"><img src="/budz/static/images/arrow_right.png" class="right" onClick="slide(1)" align="top" /></div>
+                <div class="right_holder"><img src="/brainyape/static/images/arrow_right.png" class="right" onClick="slide(1)" align="top" /></div>
         </td>
              </tr>            
             </table>
         </div>
         </center>
+        <br>
+        <br>
+        
         <center>
             
         <div class="aboutus">
@@ -208,7 +222,7 @@ window.setInterval(function slideA(){
             <tr>
             <td>
             <div class="tutor11">
-                 <img class="tutor111" src="/budz/static/images/graduate_male.png"  alt="Icon" >
+                 <img class="tutor111" src="/brainyape/static/images/graduate_male.png"  alt="Icon" >
             </div>
                 </td>
                 <td></td>
@@ -217,7 +231,7 @@ window.setInterval(function slideA(){
                 <td></td>
                 <td>
             <div class="tutor22">
-                 <img class="tutor222" src="/budz/static/images/network.png"  alt="Icon" >
+                 <img class="tutor222" src="/brainyape/static/images/network.png"  alt="Icon" >
             </div>
                      </td>
                 <td></td>
@@ -226,14 +240,17 @@ window.setInterval(function slideA(){
                 <td></td>
                 <td>
             <div class="student33">
-                  <img class="student333" src="/budz/static/images/newspaper.jpg"  alt="Icon" >
+                  <img class="student333" src="/brainyape/static/images/newspaper.jpg"  alt="Icon" >
             </div>
                    </td>
              </tr>            
                   <tr>
             <td>
             <div class="tutor1desc">
-                 <p>We have the tools for you. Experts that can show the way.</p>
+            <h4 class="tutor6">Need help reaching your scholarly goals?</h4>
+                 <p class="tutor6">Our community of friendly users will help 
+                 you understand and conceptualize the material 
+                 that's standing in the way of your success. </p>
             </div>
                  </td>
                         <td></td>
@@ -242,7 +259,9 @@ window.setInterval(function slideA(){
                 <td></td>
                 <td>
             <div class="tutor2desc">
-                   <p>Easy way to expond and find new students.</p>
+            <h4 class="tutor6">Searching for more academically minded peers in your field of study?</h4>
+                   <p class="tutor6">Utilizing our school-wide network of driven learners and educators alike
+                 can help you stay connected.</p>
 
             </div>
                      </td>
@@ -252,13 +271,17 @@ window.setInterval(function slideA(){
                 <td></td>
                 <td>
             <div class="student1desc">
-                 <p>Use our database of educated users and inavative search interface to find the service your're looking for!</p>
+            <h4 class="tutor6">Eager to share your knowledge with others?</h4>
+                 <p class="tutor6">Our platform allows those confident in their areas of expertise to efficiently
+                 discover fellow students in need of a little guidance. </p>
             </div>
                    </td>
              </tr>            
             </table>
         </div>
 	    </center>
+        <br>
+        <br>
         <br>
         <br>
         
@@ -268,13 +291,13 @@ window.setInterval(function slideA(){
             <tr>
             <td>
             <div class="tutor">
-                   <a href="/budz/default/studentposts.html"><img class="tutor2" src="/budz/static/images/tutoringscene.jpg" alt="Icon" ></a>
+                   <a href="/brainyape/default/studentposts.html"><img class="tutor2" src="/brainyape/static/images/tutoringscene.jpg" alt="Icon" ></a>
             </div>
                  </td>
            
                 <td>
             <div class="student">
-                <a href="/budz/default/tutorposts.html"><img class="student2" src="/budz/static/images/studentscene.jpg" alt="Icon"></a>
+                <a href="/brainyape/default/tutorposts.html"><img class="student2" src="/brainyape/static/images/studentscene.jpg" alt="Icon"></a>
             </div>
                     </td>
              </tr>                  

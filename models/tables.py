@@ -6,7 +6,15 @@ def get_username():
         name = auth.user.first_name+'_'+auth.user.last_name[0]
     return name
 CATEGORY = ['Math', 'History', 'Writing', '-please choose a subject-']
-MAJOR = ['Math', 'History', 'Writing', '-please choose a major-']
+MAJOR = ['Anthropology', 'Applied Physics','Art','Biochemistry and Molecular Biology','Bioengineering','Bioinformatics','Biology',
+         'Business Management Economics','Chemistry','Classical Studies','Cognitive Science','Community Studies','Computer Engineering',
+         'Computer Science','Computer Science: Computer Game Design','Critical Race and Ethnic Studies','Earth Sciences','Ecology and Evolution',
+         'Economics','Education and Teaching','Electrical Engineering','Environmental Studies','Feminist Studies','Field and Exchange Programs'
+         ,'Film & Digital Media','German Studies','Global Economics','History','History of Art and Visual Culture','Human Biology',
+         'Italian Studies','Jewish Studies','Language Studies','Latin American and Latino Studies','Legal Studies','Linguistics','Literature'
+         ,'Marine Biology','Mathematics','Molecular, Cell, and Developmental Biology','Music','Network and Digital Technology',
+         'Neuroscience Physics','Physics (Astrophysics)','Physics Education','Plant Sciences','Politics','Prelaw','Premedicine','Psychology',
+         'Robotics Engineering','Sociology','Spanish Studies','Technology and Information Management','The Philosophy Major','Theater Arts','Writing' ]
 COLLEGES = ['College Eight', 'College Nine', 'College Ten', 'Cowell College', 
             'Crown College', 'Kresge College', 'Merrill College', 'Oakes College', 'Porter College', 'Stevenson College', 'Unaffiliated']
 GENDERS = ['Male', 'Female', 'Other']

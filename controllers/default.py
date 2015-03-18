@@ -38,7 +38,7 @@ def profiles():
         userProf.mail(recipient = theProfile.email, sub=form.vars.subject, sender=auth_user.email, mess=form.vars.body)
         redirect(URL('default', 'index', args=auth.user.first_name + auth.user.last_name[0]))
     
-    return dict(user=theProfile, userprofiles=userprofiles, author=author, form=form)
+    return dict(user=theProfile, userprofiles=userprofiles, author=author, form=form, mail=mail)
 
 
 def tutorposts():
@@ -88,13 +88,13 @@ def addtutor():
     return dict(form=form)
 
 
-@auth.requires_login()
+
 def addstudent():   
      title = request.args(0) or ''    
 
      form = SQLFORM.factory(
         Field('subject1', label='Subject 1', requires=IS_IN_SET(CATEGORY, zero="-please choose a subject-", error_message="choose a subject!"), required=True),
-        Field('major', label='Major', requires=IS_IN_SET(CATEGORY, zero="-please choose a Major-"), required=False),
+        Field('major', label='Major', requires=IS_IN_SET(MAJOR, zero="-please choose a Major-"), required=False),
         Field('student_status', label='Year', requires=IS_IN_SET(YEAR, zero='~Your level of education~'), required=True),
         Field('college', label='College', requires=IS_IN_SET(COLLEGES, zero="-please choose a college-"), required=False),
         Field('price', requires=IS_IN_SET(PRICERANGE), default='Alternative Exchange'),

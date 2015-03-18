@@ -35,9 +35,11 @@ width: 350px;
     
 }
 </style>
-<h2>Welcome to BrainyApe</h2>
+<center>
+<h3>Welcome to BrainyApe</h3>
 
 <h4>List of Students:</h4>
+</center>
 <br>
 <div class='posts'>
 {{if len(posts) > 0:}}
@@ -80,4 +82,4 @@ width: 350px;
 No Posts.
 {{pass}}
     </div>
-{{=A('Add', _class='btn', _href=URL('default', 'addstudent'))}}
+{{=A('Add Student Post', _class='btn', _href=URL('default', 'addstudent'))}}

@@ -68,7 +68,7 @@ width: 350px;
      <td>
      <div class="add">
          <div class='price'><h5>${{=p.price}}/hour</h5></div>
-        <p>{{=p.body}}</p>
+       
        {{=A('View Profile', _class='btn', _href=URL('default', 'profiles', args= p.name))}}
      </div>
      </td>
